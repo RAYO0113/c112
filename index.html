@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>112四技二專 國文 完整題目檢討</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+  :root {
+    --ink: #1a1209; --paper: #fdf8f0; --warm: #f5ede0; --gold: #c8931a;
+    --red: #c0392b; --green: #27614a; --blue: #1e4d8c; --muted: #7a6a55;
+    --border: #d4c4a8; --easy: #27614a; --medium: #c8931a; --hard: #c0392b;
+    --base-size: 15px; /* 預設基礎字體大小 */
+  }
+
+  /* 開啟投屏模式時，基礎字體變大 */
+  body.proj-mode { --base-size: 24px; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: var(--base-size); 
+    line-height: 1.8;
+  }
+
+  /* 頂部標題與投屏按鈕 */
+  header { background: var(--ink); color: var(--paper); padding: 40px 24px 30px; text-align: center; position: relative; overflow: hidden; }
+  header::before { content: '國'; position: absolute; font-family: 'Noto Serif TC', serif; font-size: 300px; font-weight: 900; color: rgba(255,255,255,0.04); right: -40px; top: -60px; line-height: 1; }
+  .header-label { font-size: 11px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; }
+  header h1 { font-family: 'Noto Serif TC', serif; font-size: clamp(22px, 4vw, 36px); font-weight: 900; letter-spacing: 2px; }
+  header p { color: rgba(255,255,255,0.6); font-size: 13px; margin-top: 8px; }
+  .proj-btn { position: absolute; top: 30px; right: 24px; padding: 8px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 20px; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+  .proj-btn:hover { background: rgba(255,255,255,0.2); }
+  body.proj-mode .proj-btn { background: var(--gold); border-color: var(--gold); }
+
+  /* 頁籤 */
+  .tabs { display: flex; gap: 0; background: var(--ink); padding: 0 24px; overflow-x: auto; border-bottom: 3px solid var(--gold); }
+  .tab-btn { padding: 12px 20px; background: none; border: none; color: rgba(255,255,255,0.5); cursor: pointer; font-family: 'Noto Sans TC', sans-serif; font-size: 13px; white-space: nowrap; border-bottom: 3px solid transparent; margin-bottom: -3px; transition: all 0.2s; }
+  .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .tab-btn:hover { color: white; }
+
+  section { display: none; } section.active { display: block; }
+  .container { max-width: 96%; margin: 0 auto; padding: 32px 20px; }
+
+  /* 成績與五標區塊 */
+  .score-section { background: var(--warm); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 32px; }
+  .score-title { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--ink); display: flex; align-items: center; gap: 10px; }
+  .score-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .five-standards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 28px; }
+  .standard-card { background: white; border-radius: 10px; padding: 14px 10px; text-align: center; border: 2px solid var(--border); transition: transform 0.15s; }
+  .standard-card:hover { transform: translateY(-2px); }
+  .standard-card.highlight { border-color: var(--gold); background: #fffbf0; }
+  .standard-name { font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-bottom: 6px; }
+  .standard-score { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 900; color: var(--ink); }
+  .standard-pct { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .calc-area { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  .calc-left label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .score-input-wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .score-input-wrap input { width: 80px; padding: 10px 14px; border: 2px solid var(--border); border-radius: 8px; font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; text-align: center; background: white; color: var(--ink); outline: none; }
+  .score-input-wrap input:focus { border-color: var(--gold); }
+  .score-help { font-size: 12px; color: var(--muted); }
+  .calc-btn { padding: 10px 24px; background: var(--gold); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans TC', sans-serif; transition: background 0.2s; }
+  .calc-btn:hover { background: #a0740e; }
+  .result-card { background: white; border-radius: 10px; padding: 18px; border: 2px solid var(--border); }
+  .result-rank { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 900; color: var(--ink); }
+  .result-bar { margin-top: 10px; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .result-fill { height: 100%; background: var(--gold); border-radius: 4px; transition: width 0.6s ease; }
+
+  /* 逐題檢討 - 難易度過濾按鈕 */
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .filter-btn { padding: 6px 16px; border-radius: 20px; border: 2px solid var(--border); background: white; cursor: pointer; font-size: 13px; font-family: 'Noto Sans TC', sans-serif; transition: all 0.15s; color: var(--ink); }
+  .filter-btn.active { background: var(--ink); color: white; border-color: var(--ink); }
+  .filter-btn:hover { border-color: var(--ink); }
+
+  /* 逐題檢討 - 題目卡片 */
+  .q-card { background: white; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; overflow: hidden; transition: box-shadow 0.2s; }
+  .q-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .q-header { display: flex; align-items: center; gap: 14px; padding: 16px 20px; cursor: pointer; background: var(--warm); border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+  .q-card.open .q-header { border-bottom-color: var(--border); }
+  .q-num { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 900; color: var(--gold); min-width: 36px; }
+  .q-preview { flex: 1; font-size: calc(var(--base-size) * 1.0); color: var(--ink); line-height: 1.5; } 
+  .q-meta { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .q-answer { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 900; color: var(--green); background: rgba(39,97,74,0.1); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .difficulty { font-size: 12px; letter-spacing: 1px; }
+  .diff-easy { color: var(--easy); } .diff-medium { color: var(--medium); } .diff-hard { color: var(--hard); }
+  .q-toggle { width: 24px; height: 24px; color: var(--muted); transition: transform 0.25s; flex-shrink: 0; }
+  .q-card.open .q-toggle { transform: rotate(180deg); }
+  .q-body { display: none; padding: 20px 24px; }
+  .q-card.open .q-body { display: block; }
+  
+  .q-explain { margin-bottom: 16px; }
+  .explain-title { font-size: 11px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+  .explain-text { font-size: calc(var(--base-size) * 0.95); line-height: 1.9; color: var(--ink); } 
+  .key-point { background: rgba(200,147,26,0.1); border-left: 3px solid var(--gold); padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 13px; margin: 12px 0; }
+
+  /* ABCD 選項排版樣式 */
+  .options { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .opt { padding: 8px 12px; background: rgba(0,0,0,0.03); border-radius: 6px; font-size: calc(var(--base-size) * 0.9); }
+  .opt.correct { background: rgba(39,97,74,0.1); border-left: 3px solid var(--green); font-weight: bold; }
+
+  /* 題組整理 - 標籤與膠囊 */
+  .group-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 14px; }
+  .group-title { font-family: 'Noto Serif TC', serif; font-weight: 700; font-size: 16px; margin-bottom: 10px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+  .group-tag { font-size: 11px; background: var(--warm); border: 1px solid var(--border); color: var(--muted); padding: 2px 8px; border-radius: 10px; }
+  .group-qs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .q-chip { font-size: 13px; background: var(--warm); border: 1px solid var(--border); padding: 3px 10px; border-radius: 16px; cursor: pointer; transition: all 0.15s; }
+  .q-chip:hover { background: var(--ink); color: white; border-color: var(--ink); }
+
+  /* 題組文章共用區塊樣式 */
+  .passage-box { display: none; margin-bottom: 20px; border: 2px solid var(--gold); background: white; border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+  .passage-box.open { display: block; animation: fadeIn 0.3s ease; }
+  .passage-title { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 12px; border-bottom: 2px dashed var(--border); padding-bottom: 8px; }
+  .an-text { font-size: calc(var(--base-size) * 0.95); line-height: 1.8; color: var(--ink); }
+  .passage-btn { padding: 4px 10px; background: rgba(200,147,26,0.1); border: 1px solid var(--gold); color: var(--gold); border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; margin-left: auto; transition: all 0.2s; }
+  .passage-btn:hover { background: var(--gold); color: white; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 600px) {
+    .five-standards { grid-template-columns: repeat(3, 1fr); }
+    .calc-area { grid-template-columns: 1fr; }
+  }
+
+ /* 🌟 投屏專用無敵霸王版：強行放大所有圖片 */
+  .q-card img {
+      width: 90% !important;          /* 加上 !important 強制執行 90% 寬度 */
+      max-width: 800px !important;    /* 強制最大寬度 */
+      height: auto !important;        /* 強制比例正常，避免圖片被拉成變形怪 */
+      display: block !important;
+      margin: 15px auto !important;   
+      border-radius: 8px;  
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">112 學年度 · 四技二專統一入學測驗</div>
+  <h1>國文共同科目 完整題目檢討</h1>
+  <p>38 題選擇題 · 公告答案 · 難易分析 · 五標對照 · 考後研討數據</p>
+  <button class="proj-btn" onclick="toggleProjMode()">📽️ 投屏模式</button>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('scores')">五標與成績</button>
+  <button class="tab-btn" onclick="showTab('review')">逐題檢討</button>
+  <button class="tab-btn" onclick="showTab('groups')">題組整理</button>
+</div>
+
+<div class="container">
+  
+  <section id="tab-scores" class="active">
+    <div class="score-section">
+      <div class="score-title">🎯 112 年度五標對照表</div>
+      <div class="five-standards">
+        <div class="standard-card"><div class="standard-name">頂標</div><div class="standard-score">78</div></div>
+        <div class="standard-card"><div class="standard-name">前標</div><div class="standard-score">66</div></div>
+        <div class="standard-card"><div class="standard-name">均標</div><div class="standard-score">52</div></div>
+        <div class="standard-card"><div class="standard-name">後標</div><div class="standard-score">40</div></div>
+        <div class="standard-card"><div class="standard-name">底標</div><div class="standard-score">30</div></div>
+      </div>
+      
+      <div class="calc-area">
+        <div class="calc-left">
+          <label>請輸入您的答對題數與寫作成績：</label>
+          <div class="score-input-wrap">
+            <input type="number" id="correct-count" placeholder="0" min="0" max="38">
+            <span class="score-help">題 (每題 2 分) ＋</span>
+            <input type="number" id="essay-score" placeholder="0" min="0" max="24">
+            <span class="score-help">分 (寫作)</span>
+            <button class="calc-btn" onclick="calcScore()">計算落點</button>
+          </div>
+        </div>
+        <div class="result-card">
+          <div class="result-rank" id="result-score">-- 分</div>
+          <div id="result-label" style="font-size:14px; color:var(--muted); margin-top:5px;">請輸入成績以計算落點區間</div>
+          <div class="result-bar"><div class="result-fill" id="result-fill" style="width: 0%;"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tab-review">
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterQ('all', this)">全部題目</button>
+      <button class="filter-btn" onclick="filterQ('easy', this)">基礎題</button>
+      <button class="filter-btn" onclick="filterQ('medium', this)">中等題</button>
+      <button class="filter-btn" onclick="filterQ('hard', this)">進階題</button>
+    </div>
+
+    <div id="fixed-passage-container" class="passage-box">
+      <div id="passage-content"></div>
+    </div>
+
+    <div id="q-list">
+      </div>
+  </section>
+
+  <section id="tab-groups">
+    
+    <div class="group-card">
+      <div class="group-title">閱讀一 <span class="group-tag">第 11–14 題</span>
+        <button class="passage-btn" onclick="event.stopPropagation(); showPassage('p11-14')">📜 查看原文</button>
+      </div>
+      <div class="group-qs">
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p11-14'); goToQ(11)">11. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p11-14'); goToQ(12)">12. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p11-14'); goToQ(13)">13. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p11-14'); goToQ(14)">14. 題目解析</span>
+      </div>
+    </div>
+
+    <div class="group-card">
+      <div class="group-title">閱讀二 <span class="group-tag">第 15–17 題</span>
+        <button class="passage-btn" onclick="event.stopPropagation(); showPassage('p15-17')">📜 查看原文</button>
+      </div>
+      <div class="group-qs">
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p15-17'); goToQ(15)">15. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p15-17'); goToQ(16)">16. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p15-17'); goToQ(17)">17. 題目解析</span>
+      </div>
+    </div>
+
+    <div class="group-card">
+      <div class="group-title">閱讀三 <span class="group-tag">第 18–21 題</span>
+        <button class="passage-btn" onclick="event.stopPropagation(); showPassage('p18-21')">📜 查看原文</button>
+      </div>
+      <div class="group-qs">
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p18-21'); goToQ(18)">18. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p18-21'); goToQ(19)">19. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p18-21'); goToQ(20)">20. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p18-21'); goToQ(21)">21. 題目解析</span>
+      </div>
+    </div>
+
+    <div class="group-card">
+      <div class="group-title">閱讀四 <span class="group-tag">第 22–23 題</span>
+        <button class="passage-btn" onclick="event.stopPropagation(); showPassage('p22-23')">📜 查看原文</button>
+      </div>
+      <div class="group-qs">
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p22-23'); goToQ(22)">22. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p22-23'); goToQ(23)">23. 題目解析</span>
+      </div>
+    </div>
+
+    <div class="group-card">
+      <div class="group-title">閱讀五 <span class="group-tag">第 24–27 題</span>
+        <button class="passage-btn" onclick="event.stopPropagation(); showPassage('p24-27')">📜 查看原文</button>
+      </div>
+      <div class="group-qs">
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p24-27'); goToQ(24)">24. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p24-27'); goToQ(25)">25. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p24-27'); goToQ(26)">26. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p24-27'); goToQ(27)">27. 題目解析</span>
+      </div>
+    </div>
+
+    <div class="group-card">
+      <div class="group-title">閱讀六：沈括論銅鏡 <span class="group-tag">第 28–30 題</span>
+        <button class="passage-btn" onclick="event.stopPropagation(); showPassage('p28-30')">📜 查看原文</button>
+      </div>
+      <div class="group-qs">
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p28-30'); goToQ(28)">28. 科學觀察</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p28-30'); goToQ(29)">29. 圖文整合</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p28-30'); goToQ(30)">30. 當代觀點</span>
+      </div>
+    </div>
+
+    <div class="group-card">
+      <div class="group-title">閱讀七 <span class="group-tag">第 31–33 題</span>
+        <button class="passage-btn" onclick="event.stopPropagation(); showPassage('p31-33')">📜 查看原文</button>
+      </div>
+      <div class="group-qs">
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p31-33'); goToQ(31)">31. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p31-33'); goToQ(32)">32. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p31-33'); goToQ(33)">33. 題目解析</span>
+      </div>
+    </div>
+
+    <div class="group-card">
+      <div class="group-title">閱讀八 <span class="group-tag">第 34–36 題</span>
+        <button class="passage-btn" onclick="event.stopPropagation(); showPassage('p34-36')">📜 查看原文</button>
+      </div>
+      <div class="group-qs">
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p34-36'); goToQ(34)">34. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p34-36'); goToQ(35)">35. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p34-36'); goToQ(36)">36. 題目解析</span>
+      </div>
+    </div>
+
+    <div class="group-card">
+      <div class="group-title">閱讀九 <span class="group-tag">第 37–38 題</span>
+        <button class="passage-btn" onclick="event.stopPropagation(); showPassage('p37-38')">📜 查看原文</button>
+      </div>
+      <div class="group-qs">
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p37-38'); goToQ(37)">37. 題目解析</span>
+        <span class="q-chip" onclick="event.stopPropagation(); showPassage('p37-38'); goToQ(38)">38. 題目解析</span>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<script>
+  // ==========================================
+  // ⚠️ 第一步：請把你的 38 題題庫資料 (qData) 貼回下面這個陣列裡面！
+  // ==========================================
+  const qData = [
+     {
+  n: 1, 
+  ans: 'B', 
+  diff: 'easy',
+  preview: `1. 下列文句，何者有錯別字？
+    <div class="options">
+      <div class="opt">(A) 粼粼波光，茸茸細草</div>
+      <div class="opt correct">(B) 卮酒相賀，朵飴稱快</div>
+      <div class="opt">(C) 惠風和暢，阡陌橫斜</div>
+      <div class="opt">(D) 舳艫相繼，帆檣絡繹</div>
+    </div>`,
+  explain: `本題要求辨識文句中的錯別字。正確答案為 (B)。<br>
+  
+  各選項說明如下：<br>
+  (A) 正確。「粼粼」形容水色明淨；「茸茸」形容草木柔軟纖細，用字無誤 。<br>
+  (B) 錯誤。「卮酒」為古時盛酒的器具。「朵飴稱快」應改為「**朵頤稱快**」。「頤」指下巴，「朵頤」指動著腮頰吃東西的樣子；而「飴」為麥芽糖，兩者字形相近但意義完全不同。<br>
+  (C) 正確。「惠風」指柔和的風；「阡陌」指田間縱橫的小路，語出陶淵明〈桃花源記〉。<br>
+  (D) 正確。「舳艫」原指船尾與船首，引申為船隻（常見於蘇軾〈赤壁賦〉）；「帆檣」指船帆與桅杆。兩詞皆形容船隻往來頻繁，用字無誤 。`,
+  keypoint: `**字形辨識：** 本題考查常見成語與古文詞彙的精確用字，特別是形近字的區別（如「頤」與「飴」） 。`,
+  wrong: `**常見錯誤點：** 考生容易對 (D) 選項中的「舳艫」與「帆檣」產生疑慮，因其筆畫較多且屬於古文詞彙，但這兩個詞語在經典課文（如〈赤壁賦〉）中均有出現，屬於正確用法。`,
+  texts: ['常用成語辨析', '蘇軾〈赤壁賦〉', '陶淵明〈桃花源記〉']
+  },
+  {
+  n: 2, 
+  ans: 'A', 
+  diff: 'medium',
+  preview: `2. 《射雕英雄傳》：「郭靖把南山刀法使發了，已不用顧盼擬合，信手而應，縱橫前後，悉逢肯綮。」文中「肯綮」的意思、典故出處依序是：
+    <div class="options">
+      <div class="opt correct">(A) 關鍵 ／ 莊子〈庖丁解牛〉</div>
+      <div class="opt">(B) 關鍵 ／ 左傳〈燭之武退秦師〉</div>
+      <div class="opt">(C) 時機 ／ 莊子〈庖丁解牛〉</div>
+      <div class="opt">(D) 時機 ／ 左傳〈燭之武退秦師〉</div>
+    </div>`,
+  explain: `本題考查文學典故的辨識與應用。正確答案為 (A)。
+  
+  <div class="trans-box">
+    <div class="trans-label">【典故原文】</div>
+    「技經**肯綮**之未嘗，而況大軱乎！良庖歲更刀，割也；族庖月更刀，折也。今臣之刀十九年矣，所解數千牛矣，而刀刃若新發於硎。」
+    <div class="trans-label" style="margin-top:10px;">【白話翻譯】</div>
+    「（我的刀）不曾碰過**筋骨結合的地方**，何況是大骨頭呢！好的廚師每年換一把刀，是因為他們用刀割肉；平庸的廚師每個月換一把刀，是因為他們用刀砍骨頭。現在我的這把刀已經用了十九年，宰殺過數千頭牛，但刀刃還是像剛從磨刀石上磨出來的一樣鋒利。」
+  </div>
+
+  **【選項逐一解析】**
+  (A) 正確。依據《莊子》原文，「肯」指骨頭上的肉，「綮」指筋骨結合處。合稱「肯綮」，原意是筋骨結合最緊要的地方，後引申為事物的「關鍵」。<br>
+  (B) 錯誤。意義雖然正確，但「肯綮」一詞並未出現在《左傳》中 。<br>
+  (C) 錯誤。出處正確，但「肯綮」指稱的是空間上的關鍵節點，而非「時機」。<br>
+  (D) 錯誤。意義與出處均不正確。`,
+  keypoint: `文學互文性： 掌握《莊子》〈庖丁解牛〉中關於「純熟技藝」與「避開障礙（肯綮）」的關係，並理解其在武俠小說中形容武藝巔峰的巧妙運用。`,
+  wrong: `**常見錯誤點：** 考生容易將「肯綮」誤解為「時機」，且對於 (B) 選項同為經典名篇的〈燭之武退秦師〉產生記憶干擾。`,
+  texts: ['《莊子》〈庖丁解牛〉']
+  },
+  {
+  n: 3, 
+  ans: 'A', 
+  diff: 'medium',
+  preview: `3. 下列文句的「不用」，何者與「客位貨物，不准以多報少；倘有此弊，定即議罰革退不用」的「不用」，意義最接近？
+    <div class="options">
+      <div class="opt correct">(A) 闞澤大呼曰：若「不用」陸伯言，則東吳休矣</div>
+      <div class="opt">(B) 三藏道：「不用」化齋，我那包袱裡還有些乾糧</div>
+      <div class="opt">(C) 花木自有一年好似一年的，也「不用」臨時忙亂</div>
+      <div class="opt">(D) 你向那差人說，我得了暴病，請鄧老爺「不用」來</div>
+    </div>`,
+  explain: `本題考查多義詞「不用」的語意辨析。正確答案為 (A)。<br>
+  
+  **【題幹解析】**<br>
+  題幹出自清代商業契約或規章，意為：如果發現虛報貨物的弊端，將會議處罰款並「革退不用」。此處的「不用」是指「**不任用、不錄用**」。<br>
+
+  <div class="trans-box">
+    <div class="trans-label">【文學語境對照】</div>
+    (A) **《三國演義》**：「若不用陸伯言（陸遜），則東吳休矣！」<br>（如果不**任用**陸遜，東吳就完了！）<br>
+    (B) **《西遊記》**：「不用化齋，我那包袱裡還有些乾糧。」<br>（**不必/不需要**去乞討食物。）<br>
+    (C) **《紅樓夢》**：「花木...也不用臨時忙亂。」<br>（**不必/不需要**臨時感到匆忙混亂。）<br>
+  </div>
+
+  **【選項逐一解析】**
+  (A) **正確**。此處「不用」是指「不委任、不採用其才幹」，與題幹「不再錄用、撤職」的「任用」義項最為接近。<br>
+  (B) **錯誤**。此處「不用」為副詞，意指「不需要、不必」，用於婉拒建議。<br>
+  (C) **錯誤**。此處「不用」意指「不需要」，強調事物有其自然規律，不必人為強求忙亂。<br>
+  (D) **錯誤**。此處「不用」亦為「不必」之意，用於告知對方不需要前來。`,
+  keypoint: `**詞義辨析：** 區分「不用」在不同語境下的兩大類意義：1. **不任用、不採納**（涉及職位或建議）；2. **不必要、不需要**（涉及行為的省免）。`,
+  wrong: `**常見錯誤點：** 考生容易受現代漢語口語影響，將所有「不用」一概理解為「不必要」。在古文中，特別是涉及人物選拔或契約條文時，「用」字常帶有「任用、官職」的意涵（如：用人唯才）。`,
+  texts: ['《三國演義》', '《西遊記》', '《紅樓夢》', '古文書與契約用語']
+  },
+  {
+    n: 4, 
+    ans: 'C', 
+    diff: 'hard',
+    preview: `4. 參照下表「極」的用法說明，下列甲、乙中的「極」，最適當的歸類是：
+    <div style="border: 1px solid #d4c4a8; padding: 10px; margin: 10px 0; font-size: 0.9em; background: #fffbf0;">
+      ①〔名詞〕盡頭。如：無所不用其極。<br>
+      ②〔動詞〕窮盡、到達。如：足以極視聽之娛。<br>
+      ③〔副詞〕很，非常。如：初極狹，纔通人。
+    </div>
+    甲、北通巫峽，南極瀟湘，遷客騷人，多會於此。<br>
+    乙、李紈、平兒都道：「是極。」
+    <div class="options">
+      <div class="opt">(A) 甲屬於①，乙屬於②</div>
+      <div class="opt">(B) 甲屬於②，乙屬於①</div>
+      <div class="opt correct">(C) 甲屬於②，乙屬於③</div>
+      <div class="opt">(D) 甲屬於③，乙屬於①</div>
+    </div>`,
+    explain: `本題考查虛詞「極」在不同文句中的詞性與意義歸類 [1]。正確答案為 (C)。
+    
+    **【文本出處與翻譯】**
+    <div class="trans-box">
+      <div class="trans-label">甲、范仲淹〈岳陽樓記〉</div>
+      向北通往巫峽，向南「直達」瀟水和湘江的盡頭。<br>
+      在此「極」字描述方位的延伸與抵達，作為「動詞」使用，對應說明中的②。
+      <div class="trans-label" style="margin-top:10px;">乙、《紅樓夢》</div>
+      李紈和平兒都說：『說得「非常」對。』<br>
+      在此「極」字用來修飾「是」（對、正確），作為強調程度的「副詞」使用，對應說明中的③。
+    </div>`,
+
+    keypoint: `**虛詞與詞性：** 掌握「極」字在經典文獻（〈岳陽樓記〉、〈桃花源記〉、〈蘭亭集序〉）中的動詞與副詞用法 [1]。`,
+    wrong: `**常見錯誤點：** 考生容易將「南極」誤認為現代地理名詞，導致將其歸類為名詞 ① [1]。`,
+    texts: ['范仲淹〈岳陽樓記〉', '陶淵明〈桃花源記〉', '曹雪芹《紅樓夢》']
+  },
+  {
+    n: 5, 
+    ans: 'D', 
+    diff: 'medium',
+    preview: `5. 下列文句，何者以反問語氣表達慨歎之意？
+    <div class="options">
+      <div class="opt">(A) 愚昧之見，是否有當</div>
+      <div class="opt">(B) 然鄭亡，子亦有不利焉</div>
+      <div class="opt">(C) 此正午牡丹也。何以明之</div>
+      <div class="opt correct">(D) 何其始造舟車者，不食尸祝之報也</div>
+    </div>`,
+    explain: `本題考查句式語氣的判讀。正確答案為 (D) 。<br>
+    
+    **【選項逐一解析】**<br>
+    (A)錯誤。此句為謙詞與**詢問語氣**，意指「我這愚昧的見解，不知道是否妥當」，並非反問或慨歎。<br>
+    (B)錯誤。語出〈燭之武退秦師〉，為**陳述語氣**的警告。意指「如果鄭國滅亡了，對您（秦國）也是不利的」。<br>
+    (C)錯誤。語出沈括〈夢溪筆談〉，為**設問語氣（提問）**。意指「這是正午時分的牡丹。憑什麼知道這一點呢？」隨後作者會自行解釋原因。<br>
+    (D)正確。此句採用**反問語氣**表達深刻的**慨歎** 。意指「為什麼最初發明船隻和車子的人，（對人類貢獻卓越）卻沒有得到後人祭祀的回報呢？」其言外之意是「理應得到回報卻未得」，充滿感嘆之情。`,
+    keypoint: `**語氣辨析：** 區分「詢問」、「陳述」、「提問（設問）」與「反問（激問）」在情感表達上的強弱差異 [2]。`,
+    wrong: `**常見錯誤點：** 考生常將 (C) 的設問與 (D) 的反問混淆。設問是「自問自答」，重點在於引出下文；反問是「答案在問題反面」，重點在於強化情感（如本題的慨歎） 。`,
+    texts: ['修辭辨析：語氣', '《左傳》〈燭之武退秦師〉', '沈括〈夢溪筆談〉']
+  },
+  {
+    n: 6, 
+    ans: 'B', 
+    diff: 'medium',
+    preview: `6. 「柳絲絛子慣於伸入水中，去糾纏水中安靜的雲影和月光」，將描述人的「伸入」、「糾纏」跨界轉用，使柳絲彷彿具有人的作為。下列文句，何者運用相同的手法？
+    <div class="options">
+      <div class="opt">(A) 美麗的金針花海也是從這兒開始遍佈東海岸，直到太麻里</div>
+      <div class="opt correct">(B) 步出這座小型教堂，暮色已乘細細的雨絲自四面八方圍攏來</div>
+      <div class="opt">(C) 鮮黃胸鰭平衡著青色的流線身軀，像一艘在海洋中飛翔的潛艇</div>
+      <div class="opt">(D) 鬢邊戴著一朵白花，頸後垂著的再不是當年多彩多姿的鳳凰髻</div>
+    </div>`,
+    explain: `本題考查修辭中「擬人化（轉化）」手法的識別。正確答案為 (B) 。<br>
+    
+    **【選項逐一解析】**<br>
+    (A) **錯誤**。此句為**寫實描述**。「遍佈」是用來形容花海散佈的客觀狀態，並無將花海擬人化。<br>
+    (B) **正確**。此句使用了**擬人手法**。將「暮色」賦予了「乘（坐/搭）」與「圍攏（包圍）」等人類的動作，與題幹中柳絲「伸入」、「糾纏」的手法完全一致。<br>
+    (C) **錯誤**。語出廖鴻基〈鬼頭刀〉。句中使用了「像」字，屬於**明喻（譬喻）**手法，將魚的身軀比作潛艇。<br>
+    (D) **錯誤**。語出琦君〈髻〉。此句為**敘事描寫**，記錄人物的外貌與裝扮，並無運用擬人轉化。`,
+    keypoint: `**修辭轉用：** 掌握「擬人化」的核心特徵，即將「人的動作、情感或特質」加載於「無生物」之上 [2]。`,
+    wrong: `**常見錯誤點：** (C) 選項容易被誤判為擬人，但「像...潛艇」是將生物比作另一種物體，屬於譬喻而非擬人。`,
+    texts: ['修辭辨析：轉化', '廖鴻基〈鬼頭刀〉', '琦君〈髻〉']
+  },
+  {
+    n: 7, 
+    ans: 'A', 
+    diff: 'medium',
+    preview: `7. 依據下文，□□□□內最適合填入的詞語依序為何？
+    <div style="background: #fdf8f0; padding: 15px; border: 1px solid #d4c4a8; margin: 10px 0; font-size: 0.95em;">
+      「我細心地帶著最崇高的尊敬，觀察著父親一上一下地削掉木塊...在我內心的深處自然是 □□□□ 啊...鳥兒的鳴聲宛如女兒無污染的笑聲令我 □□□□ 。『別在山裡 □□□□ ，山中惡靈是很容易辨認出你是山中的新鮮人的...』」 ( 夏曼‧藍波安〈黑潮の親子舟〉 )
+    </div>
+    <div class="options">
+      <div class="opt correct">(A) 自慚形穢 ／ 心曠神怡 ／ 東張西望</div>
+      <div class="opt">(B) 自慚形穢 ／ 推心置腹 ／ 聲東擊西</div>
+      <div class="opt">(C) 自不量力 ／ 心曠神怡 ／ 聲東擊西</div>
+      <div class="opt">(D) 自不量力 ／ 推心置腹 ／ 東張西望</div>
+    </div>`,
+    explain: `本題考查現代散文的情境用詞辨析。正確答案為 (A)。<br>
+    
+    **【語境逐一解析】**<br>
+    1. **第一處（□□□□）**：作者描述觀察父親精湛且體力充沛的工藝技術，「最崇高的尊敬」與後文「自慚形穢」（因自覺不如他人而感到羞愧）相呼應，表達對父輩技術的敬畏。<br>
+    2. **第二處（□□□□）**：形容清脆鳥鳴與女兒笑聲。應選「心曠神怡」（心情開朗，精神愉悅）；而「推心置腹」是指待人真誠，無法形容聽覺感受。<br>
+    3. **第三處（□□□□）**：長輩告誡「新鮮人」的行為。「東張西望」形容左看右看、心神不寧，符合警示初學者在山中不要亂看的語境；「聲東擊西」為軍事策略，不合此處。`,
+    keypoint: `**現代散文閱讀：** 掌握夏曼．藍波安海洋文學中，關於「父與子」、「人與自然（惡靈/山林）」的互動邏輯與謙卑態度。`,
+    wrong: `**常見錯誤點：** 考生容易在「推心置腹」與「心曠神怡」間產生混淆，若僅憑語感而不看詞義本質（對人 vs 對物），容易誤選。`,
+    texts: ['夏曼‧藍波安〈黑潮の親子舟〉', '常用成語辨析']
+  },
+  {
+    n: 8, 
+    ans: 'B', 
+    diff: 'medium',
+    preview: `8. 下列尋犬啟事的文句，何者明顯有語法缺失？
+    <div class="options">
+      <div class="opt">(A) 她是柴犬，毛色為黑中帶些白色，尾巴呈捲曲狀</div>
+      <div class="opt correct">(B) 我們全家人都深愛著她，並且是最療癒的開心果</div>
+      <div class="opt">(C) 若您發現她徬徨於街頭，或已帶她回家代為照料</div>
+      <div class="opt">(D) 拜託您撥打(05)5379009，我們一定會致酬答謝</div>
+    </div>`,
+    explain: `本題考查應用文句子的邏輯與語法完整性。正確答案為 (B)。<br>
+    
+    **【選項逐一解析】**<br>
+    (A) **正確**。描述外貌特徵，主語「她（狗）」與表語一致。<br>
+    (B) **錯誤（語法缺失）**。此句前半段的主語是「我們全家人」，後半段「並且是最療癒的開心果」若承接前文，會變成「全家人是開心果」，但依文意「開心果」應是指「狗」。此處缺乏主語切換的銜接，造成主從不分。<br>
+    (C) **正確**。條件假設句，邏輯連貫，描述發現者的可能狀態。<br>
+    (D) **正確**。請求協助與承諾酬謝，語氣與結構皆符合啟事慣例。`,
+    keypoint: `**語法邏輯：** 辨析句子中「主語一致性」的問題。當一個句子包含兩個分句時，若主語不同，必須明確標示，否則會產生歧義。`,
+    wrong: `**常見錯誤點：** 在口語中，人們常省略主語，因此考生可能覺得 (B) 讀起來很順，忽略了嚴謹書面語中的主格錯誤 [3]。`,
+    texts: ['應用文：啟事', '基礎語法：主謂結構']
+  },
+  {
+    n: 9, 
+    ans: 'D', 
+    diff: 'hard',
+    preview: `9. 下列租賃契約文字，甲方是出租人，乙方是承租人。若要使理路連貫有序，①～⑤最適當的排列應是：
+    <div style="background: #fafafa; padding: 12px; border: 1px solid #ddd; margin: 10px 0; font-size: 0.95em;">
+      乙方使用機車發生擦撞或毀損，<br>
+      ①乙方應立即報案，<br>
+      ②並於通知甲方後，<br>
+      ③或非屬警察機關受理之情形外，<br>
+      ④將機車送雙方合意廠修理，<br>
+      ⑤除有正當理由無法向警察機關報案，<br>
+      如無法合意，則送原廠修理。
+    </div>
+    <div class="options">
+      <div class="opt">(A) ① ② ④ ⑤ ③</div>
+      <div class="opt">(B) ① ⑤ ③ ④ ②</div>
+      <div class="opt">(C) ⑤ ③ ④ ② ①</div>
+      <div class="opt correct">(D) ⑤ ③ ① ② ④</div>
+    </div>`,
+    explain: `本題考查法律契約文書的邏輯結構與連貫性。正確答案為 (D)。<br>
+    
+    **【排序邏輯解析】**<br>
+    1. **前提例外（⑤+③）**：正式條文通常先列出「例外情況」。⑤「除有正當理由...」搭配 ③「或非屬...受理之情形外」，這構成了一個完整的排除條件區塊。<br>
+    2. **正式動作（①+②+④）**：在排除上述例外後，進入標準流程：①「應立即報案」→ ②「通知甲方後」→ ④「送廠修理」。<br>
+    3. **結尾語**：「如無法合意，則送原廠修理」自然銜接於 ④ 之後。<br>
+    
+    整句理路為：除了無法報案的特殊情況外（⑤③），應該先報案（①），通知對方（②），最後才送修（④）。`,
+    keypoint: `**法律邏輯排序：** 掌握法律條文「一般原則」與「例外排除（除...外）」的排列慣例。`,
+    wrong: `**常見錯誤點：** 考生容易將「報案（①）」排在最前面，但忽略了 ⑤ 的「除...」是一個引導全句的前提條件。`,
+    texts: ['應用文：契約文書', '邏輯修辭：句序排序']
+  },
+  {
+    n: 10, 
+    ans: 'B', 
+    diff: 'hard',
+    preview: `10. 在「古畫動起來」展覽中，若要讓李清照與蘇軾跨時代對話，依據畫題、畫面及兩人作品的相關認知，下列對話內容，設計不適當的是：
+    <div class="options">
+      <div class="opt">(A) 李清照：後世的人讀詞，常說我是婉約詞的代表，你是豪放詞的代表</div>
+      <div class="opt correct">(B) 蘇軾：但我的詞不受音律束縛，完全無法入樂演唱，是個缺點</div>
+      <div class="opt">(C) 李清照：後世把你畫成戴斗笠、穿木屐的模樣，應是想凸顯你即使遇到困境，仍懂得自我調適</div>
+      <div class="opt">(D) 蘇軾：相較於我是戴笠穿屐，你聞花惜春，既符合女性感覺細膩的形象，也暗示你的詞多含蓄溫柔</div>
+    </div>`,
+    explain: `本題考查宋代詞人李清照與蘇軾的風格評價與文學常識。正確答案為 (B)。<br>
+    
+    **【選項逐一解析】**<br>
+    (A) **適當**。後世文學史確實將兩人分別標記為「婉約派」與「豪放派」的宗師。<br>
+    (B) **不適當**。蘇軾雖提倡「詩化」詞風，使其意境更廣，但他並非完全「不受音律束縛」。蘇軾詞在當時仍可傳唱（如「東坡學士詞，須關西大漢，執鐵板，唱大江東去」），且蘇軾本人極具藝術自信，絕不會在對話中稱其創作為「缺點」。<br>
+    (C) **適當**。蘇軾晚年流放海南時，確實有「東坡笠屐圖」的典故，象徵其在苦難中隨緣自適、苦中作樂的精神 。<br>
+    (D) **適當**。李清照的婉約詞（如《漱玉詞》）多描述閨情與感時傷春，與畫面中聞花惜春的形象完全吻合。`,
+    keypoint: `**文學流派辨析：** 區分李清照〈詞論〉中「詞別是一家」的嚴謹音律觀，與蘇軾「以詩入詞」的創新觀點。`,
+    wrong: `**常見錯誤點：** 考生可能誤以為「豪放派」就是不講音律，因而覺得 (B) 正確。實際上，蘇軾是擴張了詞的題材，而非完全否定詞的音樂本質 [3, 4]。`,
+    texts: ['李清照〈詞論〉', '蘇軾豪放詞風', '宋代詞學流派']
+  },
+  {
+    n: 11, ans: 'C', diff: 'hard',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p11-14')" style="margin-bottom:12px;">📜 點我查看孔乙己原文</button><br>11. 關於下圖「某人看另一人」的敘述，何者最符合甲文觀點或乙文內容？
+      <div style="text-align:center; margin: 15px 0;">
+        <img src="11.png" alt="某人看另一人示意圖" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+      </div>
+      <div class="options">
+        <div class="opt">(A) 孔乙己看見小夥計在酒店中常受欺壓</div>
+        <div class="opt">(B) 眾人看不起孔乙己讀書不多卻聲稱曾考取秀才</div>
+        <div class="opt correct">(C) 作者看見孔乙己受限於視野偏狹，也看見眾人的蒙昧</div>
+        <div class="opt">(D) 小夥計看不起孔乙己想考他，也看不起眾人對孔乙己的取笑</div>
+      </div>`,
+    explain: `本題考查對小說敘事視角與作者意圖的綜合判讀。正確答案為 (C)。<br><br>
+    <strong>【選項解析】</strong><br>
+    (A) <strong>錯誤</strong>：乙文並未描寫孔乙己對小夥計受欺壓的觀察，重心在於眾人對孔乙己的嘲弄。<br>
+    (B) <strong>錯誤</strong>：眾人嘲笑的是孔乙己「連半個秀才也撈不到」，而非質疑其讀書不多或聲稱考取。<br>
+    (C) <strong>正確</strong>：根據甲文，作者魯迅透過「三重諷刺」，同時觀察到了孔乙己對過時價值的執著（視野偏狹）以及圍觀群眾冷漠、麻木的本質（蒙昧）。<br>
+    (D) <strong>錯誤</strong>：小夥計確實輕視孔乙己，但乙文顯示小夥計會「附和著笑」，顯示其立場與取笑的眾人一致，並非看不起眾人。`,
+    keypoint: `<strong>看客文化：</strong>理解魯迅如何透過敘事者（小夥計）的冷眼，呈現社會對弱勢者的殘酷。<br>📚 <strong>出處：</strong>魯迅〈孔乙己〉、李歐梵《鐵屋中的吶喊》`
+  },
+  {
+    n: 12, ans: 'A', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p11-14')" style="margin-bottom:12px;">📜 點我查看孔乙己原文</button><br>12. 乙文①、②兩句，是否適合做為甲文「支撐著他可憐的存在」的例子？
+      <div class="trans-box" style="background: rgba(0,0,0,0.03); padding: 10px; border-left: 3px solid var(--muted); margin-bottom: 10px;">
+        ① 孔乙己看著問他的人，顯出不屑置辯的神氣。<br>
+        ② 孔乙己嘴裡說些話，這回可是全是之乎者也之類。
+      </div>
+      <div class="options">
+        <div class="opt correct">(A) ①、②皆適合</div>
+        <div class="opt">(B) ①、②皆不適合</div>
+        <div class="opt">(C) ①適合，②不適合</div>
+        <div class="opt">(D) ①不適合，②適合</div>
+      </div>`,
+    explain: `本題考查文學評論觀點與作品細節的連結。正確答案為 (A)。<br><br>
+    <strong>【選項解析】</strong><br>
+    甲文指出孔乙己「對傳統價值的依附」與「斯文人的行為習慣」支撐著他那可憐的自尊。<br>
+    句 ① 的「不屑置辯」展現了他身為讀書人最後的傲氣；句 ② 的「之乎者也」是他維持文人身分標誌的語言習慣。這兩者都是他用來維持心理平衡、防禦眾人羞辱的手段，因此皆適合做為例證。`,
+    keypoint: `<strong>行為習慣：</strong>辨析人物如何透過特定的語言與神態來對抗環境的惡意。<br>📚 <strong>出處：</strong>魯迅〈孔乙己〉`
+  },
+  {
+    n: 13, ans: 'A', diff: 'hard',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p11-14')" style="margin-bottom:12px;">📜 點我查看孔乙己原文</button><br>13. 甲文中「不可信賴的敘事者」是小說手法。魯迅透過「不可信賴的敘事者（小夥計）」，主要希望讀者：
+      <div class="key-box" style="background: rgba(200,147,26,0.1); padding: 10px; border: 1px dashed var(--gold); margin-bottom: 10px; border-radius: 4px;">
+        <strong>💡 提示：</strong>指敘事者顯現的價值觀與作者想告訴讀者的不同，作者對讀者暗示的是另一套。
+      </div>
+      <div class="options">
+        <div class="opt correct">(A) 省思小夥計對孔乙己的輕蔑</div>
+        <div class="opt">(B) 知道小夥計的笑是發自內心</div>
+        <div class="opt">(C) 從小夥計的角度理解孔乙己</div>
+        <div class="opt">(D) 將小夥計設想為小說的作者</div>
+      </div>`,
+    explain: `本題考查高階敘事技巧的運用。正確答案為 (A)。<br><br>
+    <strong>【選項解析】</strong><br>
+    (A) <strong>正確</strong>：魯迅故意設定一個冷漠、缺乏同情心的小夥計來敘事，目的是引發讀者的不安與反思，進而對小夥計所代表的殘酷社會觀念（輕蔑弱者）產生批判。<br>
+    (B) <strong>錯誤</strong>：笑雖是真實的，但這並非作者使用「不可信賴敘事者」這一特殊技巧的主要目的。<br>
+    (C) <strong>錯誤</strong>：若完全從小夥計的角度看，讀者將無法察覺悲劇性。作者是希望讀者能「跳出」其視角進行省思。<br>
+    (D) <strong>錯誤</strong>：敘事者（小夥計）是虛構角色，並非作者本人。`,
+    keypoint: `<strong>敘事反諷：</strong>透過「敘事者」與「作者」價值觀的落差，達成諷刺效果。<br>📚 <strong>出處：</strong>敘事學常識`
+  },
+  {
+    n: 14, ans: 'C', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p11-14')" style="margin-bottom:12px;">📜 點我查看孔乙己原文</button><br>14. 若某位長者想就甲文認為孔乙己「可憐」的原因提出勸慰，下列名句最適合的是：
+      <div class="options">
+        <div class="opt">(A) 生活累，一小半源於生存，一大半源於慾望</div>
+        <div class="opt">(B) 對每個人都好，可能會讓你遇上麻煩</div>
+        <div class="opt correct">(C) 我們總以為是過去抓著我們，其實是我們自己抓著過去不放</div>
+        <div class="opt">(D) 不要討厭那些嫉妒你的人，因為在他們心裡，你比他們優秀</div>
+      </div>`,
+    explain: `本題考查核心主旨的對應。正確答案為 (C)。<br><br>
+    <strong>【選項解析】</strong><br>
+    甲文明確提到孔乙己受苦的核心原因是「執著於當時已不再被珍視的過去的價值觀」。<br>
+    (C) 選項指出「自己抓著過去不放」，精確對應了孔乙己寧願貧困也要維持長衫文人架子、不願放下科舉舊夢的悲劇心理。<br>
+    (A) <strong>錯誤</strong>：孔乙己的悲劇並非源於物慾，而是精神上的執拗。<br>
+    (D) <strong>錯誤</strong>：酒店眾人對其並非「嫉妒」而是「鄙視」。`,
+    keypoint: `<strong>悲劇根源：</strong>探討舊時代文人在體制變革中無法轉型的心理困境。<br>📚 <strong>出處：</strong>生命教育與文學`
+  },
+  {
+    n: 15, ans: 'A', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p15-17')" style="margin-bottom:12px;">📜 點我查看【閱讀二】廢車墳場重生</button><br>15. 上文開頭採「一句話即一段」的寫法，通常這句話會以點到為止的方式預告下文內容。如果有讀者做了以下預想，何者無法於下文讀到？
+      <div class="options">
+        <div class="opt correct">(A) 澳洲政府如何複製該座礦山的過程</div>
+        <div class="opt">(B) 銘福在臺灣廢車回收處理界的地位</div>
+        <div class="opt">(C) 報廢車輛進入回收廠後的處理成效</div>
+        <div class="opt">(D) 回收廢料未來在能源轉換上的規劃</div>
+      </div>`,
+    explain: `本題考查對文章預測與內容對應的判讀。正確答案為 (A)。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    (A) <strong>錯誤（無法讀到）</strong>：文中首句提到「澳洲想複製」，末段提到「澳洲政府已核發執照，歡迎設廠」，但全文並未具體描述澳洲「如何複製」或其實施過程 [2]。<br>
+    (B) <strong>正確（可讀到）</strong>：文中提到「臺灣僅有 4 家處理廠，銘福是最大的一家」且為「回收先驅」，說明其業界地位 [1, 2]。<br>
+    (C) <strong>正確（可讀到）</strong>：文中詳述一輛報廢車十分鐘可完全拆解，且有九成能回收再利用 [1]。<br>
+    (D) <strong>正確（可讀到）</strong>：文中提及計劃在臺南蓋汽電共生廠，將廢料燃燒「廢轉能」的規劃 [1]。`,
+    keypoint: `<strong>資訊檢索：</strong> 區分「事實陳述（想複製/發執照）」與「過程描述（如何複製）」的差異。`,
+    texts: ['112 統測閱測：產業報導']
+  },
+  {
+    n: 16, ans: 'B', diff: 'easy',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p15-17')" style="margin-bottom:12px;">📜 點我查看【閱讀二】廢車墳場重生</button><br>16. 上文兩處「」，採用「引述業者談話」的寫法，主要是為了呈現業者：
+      <div class="options">
+        <div class="opt">(A) 對當前廢棄物政策的不同見解</div>
+        <div class="opt correct">(B) 對自身發展與未來趨勢的看法</div>
+        <div class="opt">(C) 為突破經營瓶頸曾採取的策略</div>
+        <div class="opt">(D) 為求顧客至上所做的持續努力</div>
+      </div>`,
+    explain: `本題考查引述修辭的功能。正確答案為 (B)。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    文中兩處引號內容分別為：<br>
+    1. 「我們計劃在臺南蓋汽電共生廠...『廢轉能』。」（關於自身能源轉型發展） [1]<br>
+    2. 「『城市採礦』是可行的解方。」（關於產業未來趨勢預測） [2]<br>
+    兩者皆展現了企業對產業前瞻性的布局與看法，故 (B) 最適當。 (A)、(C)、(D) 選項於文中均缺乏直接證據。`,
+    keypoint: `<strong>寫作手法：</strong> 理解引述（引用）在產業報導中增加真實感與傳達願景的功能。`,
+    texts: ['產業與環境：城市採礦']
+  },
+  {
+    n: 17, ans: 'C', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p15-17')" style="margin-bottom:12px;">📜 點我查看【閱讀二】廢車墳場重生</button><br>17. 上文採用「調整時間順序」的寫法，「1970 年代……」那段回溯「過去」，是為了繼前段介紹「現在」後，讓讀者了解：
+      <div class="options">
+        <div class="opt">(A) 廢車回收業是寡占市場</div>
+        <div class="opt">(B) 廢車回收業的屢廢屢興</div>
+        <div class="opt correct">(C) 業者發跡與轉型的歷程</div>
+        <div class="opt">(D) 業者因仿效外國而成功</div>
+      </div>`,
+    explain: `本題考查文章結構與敘事邏輯。正確答案為 (C)。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    文中回溯 1970 年代，描述創辦人從「廢五金回收」發跡，因拆船業沒落轉而投入「廢棄車輛與家電」，再引進德國技術成為「先驅」 [2]。這段文字完整勾勒出該企業如何隨時代變遷，從傳統回收轉型至高科技處理的歷史脈絡。 (A) 雖是現狀但非回溯目的；(D) 引進技術不代表單純「仿效」。`,
+    keypoint: `<strong>組織結構：</strong> 辨析「倒敘」或「回溯」法在企業傳記中呈現轉型韌性的作用。`,
+    texts: ['112 統測閱測：銘福廢車回收']
+  },
+  {
+    n: 18, ans: 'A', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p18-21')" style="margin-bottom:12px;">📜 點我查看【閱讀三】花藝美學</button><br>18. 依據上列背景資料，下列敘述何者錯誤？<br>(A) 梨雲齋先生即桐谷鳥習<br>(B) 望月義想曾為《瓶史國字觧》寫序<br>(C) 《宏道流插花圖》開彫時，《瓶史》在日本已刊行約百年<br>(D) 《瓶史國字觧》或單獨出版，或與《宏道流插花圖》合併出版`,
+    explain: `本題考查對文本細節的精確辨析。正確答案為 (A) [1]。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    (A) **錯誤**：根據資料一，「梨雲齋先生」即是「望月義想」，而非選項中所述的名稱 [1]。<br>
+    (B) **正確**：資料一提及望月義想基於《瓶史》創立流派，其門人出版相關書籍以發揚理念，寫序符合當時文人出版之慣例 [1]。<br>
+    (C) **正確**：《瓶史》於 1696 年在日本出版，而創立者望月義想的門人出版相關書籍時，距離 1696 年確實已接近或約有百年之久 [1]。<br>
+    (D) **正確**：資料提到多本相關著作出版，在江戶時代的出版環境下，單獨或合併出版皆屬可能之情況 [1]。`,
+    keypoint: `**資訊檢索：** 辨析文中人物、出版物名稱及其年代關聯 [1]。`,
+    texts: ['日本宏道流歷史']
+  },
+  {
+    n: 19, ans: 'B', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p18-21')" style="margin-bottom:12px;">📜 點我查看【閱讀三】花藝美學</button><br>19. 依據下列 **《瓶史》** 文字，何者最可能是宏道流的看法？
+      <div class="trans-box">
+        「插花不可太繁，亦不可太瘦，多不過二種三種，高低疏密，如畫苑布置，方妙。……夫花之所謂整齊者，正以參差不倫，意態天然……此真整齊也。若夫枝葉相當，紅白相配，此省曹墀下樹，墓門華表也，惡得為整齊哉！」
+      </div>
+      (A) 型態不拘繁簡<br>(B) 美感來自參差<br>(C) 布局忌如畫苑<br>(D) 整齊無非對稱`,
+    explain: `本題考查對袁宏道美學核心觀點的理解。正確答案為 (B) [1]。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    (A) **錯誤**：原文明確要求「不可太繁，亦不可太瘦」，顯示對於繁簡有明確的美學規範 [1]。<br>
+    (B) **正確**：文中強調真正的整齊在於「**參差不倫，意態天然**」，意即打破刻板的人為規律，追求自然錯落之美 [1]。<br>
+    (C) **錯誤**：原文認為插花應如「**畫苑布置**」才稱得上美妙，並非禁忌 [1]。<br>
+    (D) **錯誤**：作者反對「枝葉相當、紅白相配」式的機械式對稱，並以「墓門華表」批評其毫無靈氣 [1]。`,
+    keypoint: `**晚明美學：** 掌握「參差之美」與「天然意態」的審美標準 [1]。`,
+    texts: ['袁宏道《瓶史》']
+  },
+  {
+    n: 20, ans: 'D', diff: 'hard',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p18-21')" style="margin-bottom:12px;">📜 點我查看【閱讀三】花藝美學</button><br>20. 下列 **《瓶花譜》** 文字，與上列《瓶史》的相同觀點為何？
+      <div class="trans-box">
+        「大率插花須要花與瓶稱，令花稍高於瓶。……小瓶插花，宜瘦巧，不宜繁雜。若止插一枝，須擇枝柯奇古……欲插二種，須分高下合插，儼若一枝天生者。」
+      </div>
+      (A) 瓶身宜瘦巧，瓶高與瓶口相稱<br>(B) 枝葉任其自然，不可人為加工<br>(C) 樹枝須曲斜，否則如墓門華表<br>(D) 用兩種以上花材，應高低搭配`,
+    explain: `本題考查跨文本的美學共通性。正確答案為 (D) [1, 2]。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    (A) **錯誤**：此為《瓶花譜》對「小瓶」的特定建議，並非兩書的共同核心觀點 [2]。<br>
+    (B) **錯誤**：兩書均涉及對花材的修剪與配置，並非完全排斥人為加工 [1, 2]。<br>
+    (C) **錯誤**：「墓門華表」之比喻僅見於《瓶史》，且主要在批評過度對稱，而非強調曲斜 [1]。<br>
+    (D) **正確**：《瓶史》主張「**高低疏密**」，《瓶花譜》則主張「**分高下合插**」。兩者皆認為多種花材必須具備層次感（高低搭配），才能呈現美感 [1, 2]。`,
+    keypoint: `**文本比較：** 找出兩位明代花藝大師在「空間層次」上的共同美學準則 [1, 2]。`,
+    texts: ['張謙德《瓶花譜》']
+  },
+  {
+    n: 21, ans: 'A', diff: 'hard',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p18-21')" style="margin-bottom:12px;">📜 點我查看【閱讀三】花藝美學</button><br>21. 甲、乙二圖出自《宏道流插花圖》，對①、②的研判應是：
+      <div style="display: flex; justify-content: center; gap: 15px; margin: 15px 0;">
+        <div style="text-align:center;"><img src="21.png" alt="甲圖" style="width: 140px; border: 1px solid var(--border);"><br><small>甲圖</small></div>
+      </div>
+      ① 甲圖符合《瓶史》「種類」與「置瓶」的觀點。<br>
+      ② 乙圖符合《瓶花譜》「花與瓶稱」與「欲插兩種」的觀點。
+      <div class="options">
+        <div class="opt correct">(A) ①、②皆正確</div>
+        <div class="opt">(B) ①、②皆錯誤</div>
+        <div class="opt">(C) ①正確，②錯誤</div>
+        <div class="opt">(D) ①錯誤，②正確</div>
+      </div>`,
+    explain: `本題考查圖文整合與視覺分析。正確答案為 (A) [2]。<br><br>
+    <strong>【研判依據說明】</strong><br>
+    ① **正確**：甲圖花材簡練，符合《瓶史》「多不過二種三種」的要求；置瓶方式與布局也體現了袁宏道對「高低疏密」的講究 [1, 2]。<br>
+    ② **正確**：乙圖中花卉高度略高於瓶身比例（約為 1.3 到 1.4 倍），符合《瓶花譜》之「花與瓶稱」；且畫面中明顯可見兩種花材「分高下合插」的視覺效果 [2]。`,
+    keypoint: `**圖文對照：** 將文字理論（如比例、種類限制）精確對應至插花圖譜的實務構圖中 [2]。`,
+    texts: ['112 統測閱測：圖文判讀']
+  },
+  {
+    n: 22, ans: 'C', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p22-23')" style="margin-bottom:12px;">📜 點我查看【閱讀四】古代法庭案件</button><br>22. 關於上列罰則的理解，何者最適當？
+      <div class="options">
+        <div class="opt">(A) 殺或傷他人馬牛，必處以徒刑</div>
+        <div class="opt">(B) 殺他人畜產，皆可以受笞代替賠錢</div>
+        <div class="opt correct">(C) 傷他人馬牛以外畜產，須賠償他人損失或受笞</div>
+        <div class="opt">(D) 殺他人畜產，罰責由重至輕為馬牛＞豬羊＞犬</div>
+      </div>`,
+    explain: `本題考查對法律條文邏輯的精確解讀。正確答案為 (C) [i]。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    (A) <strong>錯誤</strong>：條文明確記載「馬牛價不減者，笞三十」，此情況並無徒刑，僅有笞刑 [i]。<br>
+    (B) <strong>錯誤</strong>：條文規定「賠減價。價不減者，笞三十」，這代表「賠償」與「受笞」是依據價值損害程度而定的法律結果，並非可以由行為人自行選擇「代替」 [i]。<br>
+    (C) <strong>正確</strong>：依據第二條與第三條規定，若造成價值減少則須「賠減價」（補償損失），若價值未減則受「笞」刑 [i]。<br>
+    (D) <strong>錯誤</strong>：觀察「價不減者」的懲處，馬牛為「笞三十」，豬羊亦為「笞三十」，兩者罰責相同，並非馬牛重於豬羊 [i]。`,
+    keypoint: `<strong>法條邏輯：</strong> 注意「且」、「或」以及「條件判斷（價減 vs 價不減）」的法律效果差異 [i]。`,
+    texts: ['古代法律與判準']
+  },
+  {
+    n: 23, ans: 'A', diff: 'hard',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p22-23')" style="margin-bottom:12px;">📜 點我查看【閱讀四】古代法庭案件</button><br>23. 依據罰則與下方情境，對小吳的處罰應是：
+      <div class="key-box">
+        <strong>情境說明：</strong> 小吳家的犬咬傷小周家的羊，小周家的羊原值二十貫，傷後仍值二十貫。
+      </div>
+      <div class="options">
+        <div class="opt correct">(A) 笞二十</div>
+        <div class="opt">(B) 笞三十</div>
+        <div class="opt">(C) 賠小周十貫</div>
+        <div class="opt">(D) 笞五十並賠小周十貫</div>
+      </div>`,
+    explain: `本題考查將具體案例套用至法律條文的能力。正確答案為 (A) [i]。<br><br>
+    <strong>【解析步驟】</strong><br>
+    1. <strong>確認主體</strong>：行為人是「小吳家的犬」，對應條文第三條「任犬殺傷他人畜產者」 [i]。<br>
+    2. <strong>確認損害</strong>：受害物（羊）原值二十貫，傷後仍值二十貫，符合「價不減者」的情況 [i]。<br>
+    3. <strong>適用罰則</strong>：依據第三條規定，任犬殺傷他人畜產且「價不減者」，處以「笞二十」，且「無所賠償」 [i]。<br>
+    因此，小吳僅需受笞刑二十次，不需賠償。`,
+    keypoint: `<strong>個案應用：</strong> 需同時判斷「致傷工具（犬）」與「價值變動（不減價）」兩個關鍵參數 [i]。`,
+    wrong: `<strong>常見錯誤點：</strong> 考生容易誤用第二條（殺傷豬羊）的罰則「笞三十」，而忽略了此案是由「犬」所造成的，應優先適用第三條專項罰則。`,
+    texts: ['古代法律判決實務']
+  },
+  {
+    n: 24, ans: 'C', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p24-27')" style="margin-bottom:12px;">📜 點我查看【閱讀五】古代詐騙集團案</button><br>24. 關於上文的理解，何者最適當？
+      <div class="options">
+        <div class="opt">(A) 因不想讓朋友為難，士人只好出面向內相借錢</div>
+        <div class="opt">(B) 士人前往拜謁的內相邸，實際上是皇家的糧倉</div>
+        <div class="opt correct">(C) 內相邸的陳設與僮僕，提高了士人對出借方的信任</div>
+        <div class="opt">(D) 當士人再次前往內相邸取借款，宅院已經租給他人</div>
+      </div>`,
+    explain: `本題考查對情節細節與人物心理的掌握。正確答案為 (C) [1]。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    (A) <strong>錯誤</strong>：士人是為了自己需要錢（允爾五百金）而拜謁，並非怕朋友為難 [1]。<br>
+    (B) <strong>錯誤</strong>：文中並未提到糧倉，該宅邸是騙子臨時租來的（僦宅） [1]。<br>
+    (C) <strong>正確</strong>：文中描述「邸宇宏壯，蒼頭、廬兒無慮百數」，這種奢華的排場（權力暗示）讓士人放下了戒心，產生了對方確實是「中貴」的錯誤信任 [1]。<br>
+    (D) <strong>錯誤</strong>：原文說「宅已易主」，指的是騙子租期屆滿撤離，並非單純「租給他人」 [1]。`,
+    keypoint: `<strong>情節推論：</strong> 理解騙局中「外在排場」如何影響受害者的判斷力 [1]。`,
+    texts: ['馮夢龍《智囊》']
+  },
+  {
+    n: 25, ans: 'A', diff: 'hard',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p24-27')" style="margin-bottom:12px;">📜 點我查看【閱讀五】古代詐騙集團案</button><br>25. 依據上文，廬兒、客對士人說的話，主要用意為何？
+      <div style="background:var(--warm); padding:10px; border-radius:8px; margin:10px 0;">
+        廬兒曰：「已晚，須明日。」<br>
+        客復屬耳：「當早至，我俟於此。」
+      </div>
+      <div class="options">
+        <div class="opt correct">(A) 廬兒：拖延時間以便潛逃；客：讓士人相信隔天定可拿到錢</div>
+        <div class="opt">(B) 廬兒：拖延時間以便潛逃；客：讓士人不好意思不出面取錢</div>
+        <div class="opt">(C) 廬兒：利用時間找人頂罪；客：讓士人相信隔天定可拿到錢</div>
+        <div class="opt">(D) 廬兒：利用時間找人頂罪；客：讓士人不好意思不出面取錢</div>
+      </div>`,
+    explain: `本題考查對騙術邏輯的深度分析。正確答案為 (A) [1]。<br><br>
+    <strong>【解析說明】</strong><br>
+    ● <strong>廬兒（僕役）</strong>：說「已晚，須明日」是為了爭取時間，讓整批騙子在當晚能帶著騙來的「贄（見面禮）」安全撤離、退租房屋 [1]。<br>
+    ● <strong>客（同夥）</strong>：在耳邊叮囑「早至、我俟於此（我在這等你）」，是為了給予士人最後的安全感與心理保證，確保士人當晚不會起疑報案或多作詢問，達成完美的緩兵之計 [1]。`,
+    keypoint: `<strong>角色功能分析：</strong> 辨析騙局中不同角色如何分工以達成心理控制 [1]。`,
+    texts: ['古典短篇小說導讀']
+  },
+  {
+    n: 26, ans: 'B', diff: 'hard',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p24-27')" style="margin-bottom:12px;">📜 點我查看【閱讀五】古代詐騙集團案</button><br>26. 依據上文與下圖，哪些是士人受騙的原因？
+      <div class="key-box">
+        ② <strong>隧道效應</strong>：因急迫而只就當下訊息做決定。<br>
+        ③ <strong>貪多心理</strong>：想得更多、貪小便宜而受騙。<br>
+        ④ <strong>需求心理</strong>：真實需求遭人利用而受騙。
+      </div>
+      <div class="options">
+        <div class="opt">(A) ①③⑤</div>
+        <div class="opt correct">(B) ②③④</div>
+        <div class="opt">(C) ①②④⑥</div>
+        <div class="opt">(D) ②③④⑤</div>
+      </div>`,
+    explain: `本題結合現代心理學名詞進行文本分析。正確答案為 (B) [2]。<br><br>
+    <strong>【對應解析】</strong><br>
+    ● <strong>② 隧道效應</strong>：士人急於借到五百金，導致他只注意到豪華的宅邸與客人的保證，忽略了許多不合理之處 [2]。<br>
+    ● <strong>③ 貪多心理</strong>：當客人說「此特其一耳（這只是其中一份）」，暗示還有更多禮物，士人並未阻止，顯示其想透過加碼禮物來換取「請益（增加借款）」的貪念 [2]。<br>
+    ● <strong>④ 需求心理</strong>：士人確實有金錢需求（五百金），騙子正是鎖定這項真實需求進行誘導 [2]。<br>
+    文中並未顯示士人「自認聰明（①）」或「同情他人（⑤）」，故不選。`,
+    keypoint: `<strong>跨學科分析：</strong> 將心理學理論應用於古代文學文本的行為動機分析 [2]。`,
+    texts: ['現代心理學與文學']
+  },
+  {
+    n: 27, ans: 'B', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p24-27')" style="margin-bottom:12px;">📜 點我查看【閱讀五】古代詐騙集團案</button><br>27. 依據上文，下列各組「」內詞語的意義，何者相同？
+      <div class="options">
+        <div class="opt">(A) 與所「故」遊客談 ／ 「故」列敘時人，錄其所述</div>
+        <div class="opt correct">(B) 某中貴允「爾」五百 ／ 官命促「爾」耕，勗爾植</div>
+        <div class="opt">(C) 為期入謁「及」門 ／ 指爪「及」碗唇上皆可為之</div>
+        <div class="opt">(D) 苟得其歡，即請「益」非難也 ／ 聖「益」聖，愚益愚</div>
+      </div>`,
+    explain: `本題考查一詞多義的辨析。正確答案為 (B) [2]。<br><br>
+    <strong>【詞義詳解】</strong><br>
+    (A) <strong>不同</strong>：前者意為「舊有的/老（朋友）」；後者（王羲之〈蘭亭集序〉）意為「所以/因此」 [2]。<br>
+    (B) <strong>相同</strong>：兩者皆為代名詞「你」。前者指「答應『你』五百兩」；後者（柳宗元〈種樹郭橐駝傳〉）指「督促『你們』耕種」 [2]。<br>
+    (C) <strong>不同</strong>：前者意為「等到/抵達」；後者（沈括〈夢溪筆談〉）意為「與/和（連接詞）」 [2]。<br>
+    (D) <strong>不同</strong>：前者意為「增加」；後者（韓愈〈師說〉）意為「更加（副詞）」 [2]。`,
+    keypoint: `**詞義辨析：** 判讀代名詞與虛詞在不同經典課文（蘭亭集序、師說、種樹郭橐駝傳）中的變化 [2]。`,
+    texts: ['柳宗元〈種樹郭橐駝傳〉', '韓愈〈師說〉', '王羲之〈蘭亭集序〉']
+  },
+  {
+    n: 28, ans: 'C', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p28-30')" style="margin-bottom:12px;">📜 點我查看【閱讀六】沈括論銅鏡</button><br>28. 「呈現異同」是說明事物常用的方式。依據沈括所述，下列何者「不是」他的觀察結果？
+      <div class="options">
+        <div class="opt">(A) 同樣是銅鏡，有凹面、凸面之別</div>
+        <div class="opt">(B) 同樣是凸面鏡，凸起程度有高、低之別</div>
+        <div class="opt correct">(C) 無論凹面鏡、凸面鏡，其尺寸均與人臉的大小相同</div>
+        <div class="opt">(D) 無論凸起程度高低，凸面鏡製作均以能照到全臉為原則</div>
+      </div>`,
+    explain: `本題考查對沈括科學觀察內容的精確理解。正確答案為 (C) [1]。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    (A) <strong>正確</strong>：文中提到「鑑窪（凹）」與「凸」的區別 [1]。<br>
+    (B) <strong>正確</strong>：沈括觀察到「小者凸」，且為了「全睹人面」而調整「微凸」，暗示了凸起程度隨功能需求而有差異 [1]。<br>
+    (C) <strong>錯誤（非觀察結果）</strong>：沈括明確指出鏡子有「大、小」之別（如殷商小鏡僅 6-12cm），且凸面鏡是為了將人臉「收小」以納入鏡中，並非鏡子尺寸與臉部相同 [1]。<br>
+    (D) <strong>正確</strong>：文中末段強調「收人面令小，則全睹之」，說明這是一貫的設計原則 [1]。`,
+    keypoint: `<strong>科學觀察：</strong> 掌握沈括對光學現象（成像大小與曲率關係）的客觀紀錄 [1]。`,
+    texts: ['沈括〈夢溪筆談〉', '科學說明文閱讀']
+  },
+  {
+    n: 29, ans: 'B', diff: 'hard',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p28-30')" style="margin-bottom:12px;">📜 點我查看【閱讀六】沈括論銅鏡</button><br>29. 依據銅鏡演變簡圖及沈括之文，關於①、②的研判應是：
+      <div class="key-box">
+        ① 從圖中所舉的古鏡大小看，完全符合沈括所云「鑑大則平，鑑小則凸」。<br>
+        ② 沈括所說「工之巧智」的「工」，應該是指殷商時候的製鏡工匠。
+      </div>
+      <div class="options">
+        <div class="opt">(A) ①、②皆正確</div>
+        <div class="opt correct">(B) ①正確，②錯誤</div>
+        <div class="opt">(C) ①無法判斷，②正確</div>
+        <div class="opt">(D) ①錯誤，②無法判斷</div>
+      </div>`,
+    explain: `本題考查圖表與文本的整合邏輯。正確答案為 (B) [2]。<br><br>
+    <strong>【研判依據說明】</strong><br>
+    ● <strong>研判 ① 正確</strong>：簡圖顯示早期（如殷商）銅鏡直徑小且為凸面，後期（唐宋後）銅鏡變大且平，這與沈括觀察到的規律完全吻合 [1, 2]。<br>
+    ● <strong>研判 ② 錯誤</strong>：沈括文中的「古人」與「工」是泛指古代具備智慧的工匠階層，雖然殷商鏡面呈現了這種智慧，但沈括的論點是針對「古人鑄鑑」的普遍性原則，並非特指某一個朝代（殷商）的特定工匠 [1, 2]。`,
+    keypoint: `<strong>圖文整合：</strong> 將時間軸（簡圖）與理論原則（沈括文）進行交叉比對 [1]。`,
+    texts: ['112 統測閱測：圖文判讀']
+  },
+  {
+    n: 30, ans: 'B', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p28-30')" style="margin-bottom:12px;">📜 點我查看【閱讀六】沈括論銅鏡</button><br>30. 上列資料內若要概括「當代學者」的觀點，下框內最適合填入的是：
+      <div class="trans-box">
+        「古鏡之所以呈現凸面，並非出自工匠的巧思，而是<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>。因青銅鏡在鑄造後冷卻時，鏡緣受範模阻礙收縮較慢，鏡心收縮較快，導致面凸而背凹。」
+      </div>
+      <div class="options">
+        <div class="opt">(A) 為減省製鏡流程而興起</div>
+        <div class="opt correct">(B) 因解決製鏡難題而誕生</div>
+        <div class="opt">(C) 出自鑄造師偶然的錯誤</div>
+        <div class="opt">(D) 得自前代工藝品的靈感</div>
+      </div>`,
+    explain: `本題考查對當代科學觀點與古代觀點的比較判讀。正確答案為 (B) [2]。<br><br>
+    <strong>【解析說明】</strong><br>
+    文中當代學者的論點指出，凸面現象是由於「青銅鑄造冷卻時的物理收縮差異」所造成。這暗示了在早期技術限制下，鑄造小面積青銅時會自然產生扭曲，古代工匠是為了解決這種技術上的「物理難題」，進而順勢利用此現象達成縮小成像的功能，故 (B) 最貼切 [2]。`,
+    keypoint: `<strong>觀點比較：</strong> 區分沈括的「人為巧智說」與現代科學的「物理產物說」之對話關係 [2]。`,
+    texts: ['當代科學觀點與古典文本']
+  },
+  {
+    n: 31, ans: 'D', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p31-33')" style="margin-bottom:12px;">📜 點我查看【閱讀七】宋代陶枕</button><br>31. 上文描述的「這隻陶枕」，具有何種特色？
+      <div class="options">
+        <div class="opt">(A) 呈腰子形，整體無一平面</div>
+        <div class="opt">(B) 下半素淨，上半彩繪繁複</div>
+        <div class="opt">(C) 支撐部分的底部加雕花樣</div>
+        <div class="opt correct">(D) 立體的曲面為仰睡而設計</div>
+      </div>`,
+    explain: `本題考查對文本細節的精確檢索。正確答案為 (D) [1]。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    (A) <strong>錯誤</strong>：文中提到「除了底面不得不做平之外」，顯示仍有底面是平的，並非「無一平面」 [1]。<br>
+    (B) <strong>錯誤</strong>：文中描述上半段裝飾是「簡單的」且「相當素淨」，並非「繁複」 [1]。<br>
+    (C) <strong>錯誤</strong>：文中提到「底面不得不做平」，並未提及底部有雕花；且支撐部分強調的是「輪廓線的考究」而非裝飾 [1]。<br>
+    (D) <strong>正確</strong>：作者親自試睡後指出「它對頭部轉動形成限制，側臥就不方便」，進而推論這說明了古人（仰睡）的睡眠習慣，意即其造形是適配仰睡的 [1]。`,
+    keypoint: `<strong>資訊檢索：</strong> 區分作者的「實測感受」與文中對「物理構造」的客觀描述。`,
+    texts: ['漢寶德〈一只宋枕中所見的文化精神〉']
+  },
+  {
+    n: 32, ans: 'A', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p31-33')" style="margin-bottom:12px;">📜 點我查看【閱讀七】宋代陶枕</button><br>32. 上文主要從哪個層面，指出陶枕「代表宋代藝術精神」？
+      <div class="options">
+        <div class="opt correct">(A) 形制簡約內斂，營造自然舒適感</div>
+        <div class="opt">(B) 紋飾寓含象徵性，寄托文人品格</div>
+        <div class="opt">(C) 由注重實用，逐漸趨向清玩鑒賞</div>
+        <div class="opt">(D) 風格秀逸典雅，對材質相當挑剔</div>
+      </div>`,
+    explain: `本題考查對文章核心美學觀點的歸納。正確答案為 (A) [1]。<br><br>
+    <strong>【解析說明】</strong><br>
+    作者強調這隻陶枕「造形簡單、直率」，且「完全合乎功能」，並以此連結至「人體工學」與「柔和、動人的形」。這種「不靠裝飾」而靠「塑體功力」達成的高雅境界，正是作者認為最能代表宋代「簡約、內斂且與生活結合」的藝術精神，故 (A) 最貼切。文中並未強調文人品格寄託 (B)、材質挑剔 (D) 或轉向清玩 (C) [1]。`,
+    keypoint: `<strong>主旨歸納：</strong> 理解「功能即美（人體工學）」如何轉化為藝術精神的論述過程。`,
+    texts: ['宋代藝術美學：簡約與素雅']
+  },
+  {
+    n: 33, ans: 'B', diff: 'hard',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p31-33')" style="margin-bottom:12px;">📜 點我查看【閱讀七】宋代陶枕</button><br>33. 關於上文寫作手法與意義，何者敘述最適當？
+      <div class="options">
+        <div class="opt">(A) 第一段以「沒什麼市場價值」，暗示該陶枕出自經驗不足的工匠之手</div>
+        <div class="opt correct">(B) 第二段點出「造形上下了很大的功夫」，其後兩段分述造形的兩項特色</div>
+        <div class="opt">(C) 第三、四段拈出「人體工學」做為兩項特色的核心概念，以保持連貫性</div>
+        <div class="opt">(D) 末段以「現代受過設計教育的設計家」，凸顯宋代設計思維尚在萌芽階段</div>
+      </div>`,
+    explain: `本題考查對文章組織結構與寫作策略的分析。正確答案為 (B) [1]。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    (A) <strong>錯誤</strong>：作者提「沒什麼市場價值」是為了對比其「極高的藝術精神價值」，並非貶低工匠身分 [1]。<br>
+    (B) <strong>正確</strong>：文章結構極為嚴謹。第二段預告「在造形上下了很大的功夫」，隨後第三段詳述「合乎功能的曲面特色（人體工學）」，第四段則詳述「支撐部分的塑體輪廓特色」 [1]。<br>
+    (C) <strong>錯誤</strong>：「人體工學」僅是第三段（使用功能）的核心概念，第四段側重於「純粹造形美（非直線設計）」，兩段重點不同 [1]。<br>
+    (D) <strong>錯誤</strong>：末段提及現代設計家是為了「推崇」宋代工匠的直覺美感已達到極高境界，而非指其處於「萌芽階段」 [1]。`,
+    keypoint: `<strong>結構分析：</strong> 辨識文章如何透過「總分結構（第二段總領、三四段分述）」展開論證。`,
+    texts: ['說明文寫作邏輯']
+  },
+  {
+    n: 34, ans: 'C', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p34-36')" style="margin-bottom:12px;">📜 點我查看【閱讀八】臺灣鞋業王國傳奇</button><br>34. 關於上文第二段的寫作手法與意義，何者敘述「不適當」？
+      <div class="options">
+        <div class="opt">(A) 列舉一連串人名與頭銜，顯示當日活動冠蓋雲集</div>
+        <div class="opt">(B) 讓「全球第一」屢屢出現，彰顯臺灣鞋業實力雄厚</div>
+        <div class="opt correct">(C) 以「LVMH」為例，說明臺灣精品鞋銷量佔全球市場之半</div>
+        <div class="opt">(D) 舉出「1億人」，強調臺灣在全球中高檔鞋供應鏈的影響力</div>
+      </div>`,
+    explain: `本題考查對文章數據陳述的精確理解與邏輯判讀。正確答案為 (C) [1]。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    (A) <strong>適當</strong>：文中羅列蔣至剛、蔡朝嘉等多位董事長與總經理頭銜，確實旨在呈現活動參與者的層級之高與影響力之大 [1]。<br>
+    (B) <strong>適當</strong>：多次使用「全球第一」描述代工量、特殊鞋與精品鞋盒，量化了臺灣鞋業在全球的領先地位 [1]。<br>
+    (C) <strong>不適當（錯誤）</strong>：文中寫「掌握了全球一半LVMH（路易威登）鞋子」，這僅代表在「LVMH 這一個品牌」中占比一半，並非指「全球所有精品鞋市場」的一半，選項過度擴張了數據的適用範圍 [1]。<br>
+    (D) <strong>適當</strong>：以「1 億人買不到鞋」這種極端假設，具象化了臺灣供應鏈對全球消費市場的深遠影響力 [1]。`,
+    keypoint: `<strong>資訊查核：</strong> 辨析統計數據中「部分（單一品牌）」與「全體（全球市場）」的差異 [1]。`,
+    texts: ['112 統測閱測：產業深度報導']
+  },
+  {
+    n: 35, ans: 'B', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p34-36')" style="margin-bottom:12px;">📜 點我查看【閱讀八】臺灣鞋業王國傳奇</button><br>35. 上文透過「當天……」為開頭的兩段（第三、六段），主要是想表達：
+      <div class="options">
+        <div class="opt">(A) 臺灣鞋廠大多移往東南亞與南亞</div>
+        <div class="opt correct">(B) 鞋業巨頭仍珍惜並守護臺灣鞋業</div>
+        <div class="opt">(C) 陳建民生前廣結志同道合者為友</div>
+        <div class="opt">(D) 老朋友們以不同方式紀念陳建民</div>
+      </div>`,
+    explain: `本題考查對文章敘事重心與情感基調的歸納。正確答案為 (B) [1]。<br><br>
+    <strong>【解析說明】</strong><br>
+    這兩段描述了鞋王們遠從異國趕回參加紀念活動，並提及他們創辦「臺灣鞋業教育基金會」，強調「鞋王們卻愈來愈團結，為培育臺灣下一代人才而努力」。這顯示了這群產業領袖在競爭之餘，對臺灣鞋業根基的傳承與守護精神，故 (B) 為最佳概括。(A) 僅是背景陳述；(C)(D) 雖有提及紀念，但未觸及「團結守護產業」的更高層次主旨 [1]。`,
+    keypoint: `<strong>主旨昇華：</strong> 理解人物特寫如何從「私人情誼」轉化為對「產業願景」的集體承諾 [1]。`,
+    texts: ['臺灣企業家精神與傳承']
+  },
+  {
+    n: 36, ans: 'C', diff: 'hard',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p34-36')" style="margin-bottom:12px;">📜 點我查看【閱讀八】臺灣鞋業王國傳奇</button><br>36. 某鞋廠將上文所引寶成集團主管龔松煙的言談，歸納為四項鞋業優勢。下列敘述最符合其原意的是：
+      <div class="options">
+        <div class="opt">(A) 資源面：政府協助越來越多</div>
+        <div class="opt">(B) 人才面：加入鞋業者已年輕化</div>
+        <div class="opt correct">(C) 生產面：上下游供應鏈始終穩固</div>
+        <div class="opt">(D) 研發面：研發中心會從國外遷回臺灣</div>
+      </div>`,
+    explain: `本題考查對人物言論內容的邏輯歸納與事實判讀。正確答案為 (C) [1]。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    (A) <strong>錯誤</strong>：龔松煙提到「當年什麼資源都沒有」，並未提及現今政府協助增加 [1]。<br>
+    (B) <strong>錯誤</strong>：原文說「年輕人『如果』願意多了解並加入」，表示目前仍需鼓勵，並非「已經」年輕化 [1]。<br>
+    (C) <strong>正確</strong>：文中提到「如今臺灣依然掌握全球最重要的製鞋供應鏈」，且在前段也強調「鞋廠與供應商合作如昔」，符合生產面穩固的描述 [1]。<br>
+    (D) <strong>錯誤</strong>：原文是說「研發中心仍會『設在』臺灣」，指的是一直以來都留在臺灣，而非「從國外遷回」 [1]。`,
+    keypoint: `<strong>精確解讀：</strong> 區分「假設語氣（如果...）」與「既定事實」的差異，並注意「動態描述（遷回）」與「狀態描述（設在）」的不同 [1]。`,
+    texts: ['112 統測閱測：實務歸納題']
+  },
+  {
+    n: 37, ans: 'C', diff: 'hard',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p37-38')" style="margin-bottom:12px;">📜 點我查看【閱讀九】焦桐〈論吃飯〉</button><br>37. 上文所述長米蒸煮後所呈現的特性，與下列何者最接近？
+      <div class="options">
+        <div class="opt">(A) 批大郤，導大窾，因其固然</div>
+        <div class="opt">(B) 大行不顧細謹，大禮不辭小讓</div>
+        <div class="opt correct">(C) 聖人不凝滯於物，而能與世推移</div>
+        <div class="opt">(D) 人工繼晷以襄事，豈好勞而惡逸哉</div>
+      </div>`,
+    explain: `本題考查文學比擬與跨文本語意連結。正確答案為 (C) [1]。<br><br>
+    <strong>【選項逐一解析】</strong><br>
+    (A) <strong>錯誤</strong>：語出《莊子》〈庖丁解牛〉。強調順應自然規律。長米強調的是「不堅持自我、善變」，與技術上的順應自然不盡相同 [1, 2]。<br>
+    (B) <strong>錯誤</strong>：語出《史記》〈鴻門宴〉。形容成大事者不拘泥小節。與長米「不具黏性、顆粒獨立、適配各種環境」的性格無關 [1]。<br>
+    (C) <strong>正確</strong>：語出《楚辭》〈漁父〉。意指聖人不被外物拘束，能隨時代環境改變。文中形容長米為「騎牆派」、「善變」、「不強調自我」，這種能與各類食材（環境）完美融合的特性，正符合「與世推移」的處世哲學 [1]。<br>
+    (D) <strong>錯誤</strong>：意指人工作日以繼夜以完成事務。與米飯性格描述完全無關 [1]。`,
+    keypoint: `<strong>跨文本類比：</strong> 辨析「長米」的隨和性與屈原〈漁父〉中「與世推移」的處事彈性。 [1]`,
+    texts: ['焦桐〈論吃飯〉', '《楚辭》〈漁父〉']
+  },
+  {
+    n: 38, ans: 'C', diff: 'medium',
+    preview: `<button class="passage-btn" onclick="event.stopPropagation(); showPassage('p37-38')" style="margin-bottom:12px;">📜 點我查看【閱讀九】焦桐〈論吃飯〉</button><br>38. 上文對「米的天性既純真又深情」、「白飯之於佳肴，好比畫布之於色彩和線條」的解說，依序相當於右圖的哪個理由？
+      <div class="key-box">
+        ② <strong>融合性</strong>：接受並轉化外來風味。<br>
+        ④ <strong>調和性</strong>：作為基底使衝突的色彩達成和諧。
+      </div>
+      <div class="options">
+        <div class="opt">(A) ①、④</div>
+        <div class="opt">(B) ②、③</div>
+        <div class="opt correct">(C) ②、④</div>
+        <div class="opt">(D) ③ ... (略)</div>
+      </div>`,
+    explain: `本題考查對文學喻依的邏輯分類。正確答案為 (C) [1]。<br><br>
+    <strong>【解析說明】</strong><br>
+    1. <strong>「既純真又深情」</strong>：文中解釋為「跟什麼水結合，就變成什麼飯」，強調米能吸收、容納並轉化不同的液體與風味，對應 **② 融合性** [1]。<br>
+    2. <strong>「畫布之於色彩」</strong>：文中強調白飯能讓爭奇鬥豔的菜肴不至於「彼此扞格」，起到緩衝與連結的作用，對應 **④ 調和性**（作為中性的背景讓整體美感統一） [1]。`,
+    keypoint: `<strong>喻依判讀：</strong> 理解米飯在飲食美學中擔任「容器」與「中介」的雙重角色。 [1]`,
+    texts: ['焦桐〈論吃飯〉']
+  },
+  
+
+  ];
+
+  // ==========================================
+  // ⚠️ 第二步：題組文章資料庫 (請在這裡把文章填進去)
+  // ==========================================
+  const passagesData = {
+    'p11-14': {
+      title: '📖 閱讀一：孔乙己 (第 11–14 題)',
+      content: `【甲】<br>孔乙己執著於當時已不再被珍視的過去的價值觀，因此在咸亨酒店顧客的眼中是可憐的。他對一些傳統價值的依附和他的有些斯文人的行為習慣，支撐著他可憐的存在，但都不能使他略有高貴之處。因此，雖然那樣受苦，孔乙己卻不是英雄，而只是咸亨酒店長衫短衫顧客都鄙視的失敗者。<br><br>〈孔乙己〉技巧之妙不僅在寫出了主人翁這一難忘的形象，還在設計了一個不可信賴的敘事者。故事是由咸亨酒店一個小夥計用某種嘲諷口氣敘述的。這個人在敘述當年的情況時，已經是一個成人了。他做小夥計時顯然也和那些顧客一樣，是鄙視孔乙己的。現在他作為成人回憶往事，歲月卻並沒有改變他的態度。通過這種間接的敘述層次，魯迅進行著三重諷刺：對主人翁，對那一群嘲棄他的看客，也對那毫無感受力的代表看客們聲音的敘述者。他們都顯得同樣可憐，同樣缺乏真正衡量問題的意識。（改寫自李歐梵《鐵屋中的吶喊》）<br><br>
+       【乙】<br>孔乙己喝過半碗酒，漲紅的臉色漸漸復了原，旁人便又問道，「孔乙己，你當真認識字麼？」孔乙己看著問他的人，顯出不屑置辯的神氣。他們便接著說道，「你怎的連半個秀才也撈不到呢？」孔乙己立刻顯出頹唐不安模樣，臉上籠上了一層灰色，嘴裡說些話；這回可是全是之乎者也之類，一些不懂了。在這時候，眾人也都哄笑起來：店內外充滿了快活的空氣。<br><br>在這些時候，我可以附和著笑，掌櫃是決不責備的。而且掌櫃見了孔乙己，也每每這樣問他，引人發笑。孔乙己自己知道不能和他們談天，便只好向孩子說話。有一回對我說道，「你讀過書麼？」我略略點一點頭。他說，「讀過書，……我便考你一考。茴香豆的茴字，怎樣寫的？」我想，討飯一樣的人，也配考我麼？便回過臉去，不再理會。（節錄自魯迅〈孔乙己〉）`
+    },
+    'p15-17': {
+      title: '📖 閱讀二：廢車墳場重生 (第 15–17 題)',
+      content: `在高雄，有一座澳洲想複製的城市礦山。<br>
+臺灣約有280家廢車回收廠，但僅有4家處理廠，銘福是最大的一家。這裡不是車輛墳場，而是價值再創之地。一輛報廢車進來，平均十分鐘就能完全拆解，其中九成能回收再利用，僅一成是塑料垃圾。「我們計劃在臺南蓋汽電共生廠，最後一成廢料燃燒後，也可以『廢轉能』。」<br>
+1970年代，因工業建設與拆船盛行，銘福創辦人陳福松做起廢五金回收生意。拆船業沒落後，廢棄車輛與家電取而代之。一輛廢車，拆下回收價值高的輪胎、引擎、電瓶後，重頭戲在車身。銘福自德國引進全臺第一條粉碎機產線，將報廢車體撞擊粉碎成粒，再以重量或磁性等物理特質，篩選出有價金屬，堪稱臺灣廢車回收先驅。<br>
+電動車促使鋰電池需求急升，但鎳、鈷等鋰電池關鍵原料開採不易，價格不斷飆漲。「目前看來，『城市採礦』是可行的解方。」銘福已預見臺灣2025年的電動車電池退役潮，正積極開發鋰電池回收煉金術。對於廢棄太陽能板將造成環境浩劫，銘福也請專家移轉回收技術。目前澳洲政府已核發銘福回收處理執照，歡迎銘福前往設廠。（改寫自林鳳琪〈銘福把廢車墳場變成貴金屬重生寶地〉）
+`
+    },
+    'p18-21': {
+      title: '📖 閱讀三：花藝美學 (第 18–21 題)',
+      content: `宏道流，日本花道流派，創立於江戶時代，發展至今。<br>
+明代袁宏道《瓶史》於1696年在日本出版，深受矚目。梨雲齋先生望月義想（1722～1804）基於此書創立「宏道流」。望月義想的門人透過《瓶史述要》、《瓶史國字觧》、《宏道流插花圖》的出版，發揚流派與《瓶史》的理念。<br>
+成書稍早於《瓶史》的張謙德《瓶花譜》，也是明代花藝理論名著。二書被譽為插花典籍雙璧。<br><br>
+      <img src="18-21A.jpg" alt="18-21題組圖片A" style="max-width: 100%; height: auto; margin-bottom: 16px; border-radius: 8px; border: 1px solid #ccc;">
+      <br>
+      <img src="18-21B.jpg" alt="18-21題組圖片B" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #ccc;">
+      <br><br>
+      `
+    },
+   'p22-23': {
+      title: '📖 閱讀四：古代法庭案件 (第 22–23 題)',
+      content: `
+      <div style="background-color: #e3f2fd; padding: 15px; border-left: 5px solid #1976D2; margin-bottom: 15px; line-height: 1.6; color: #333; font-size: 0.95em;">
+        <strong>【案件情境】</strong><br>
+        <div style="background: white; padding: 10px; border: 1px solid #d4c4a8; border-radius: 5px; margin-bottom: 10px;">
+          <strong>小吳：</strong>大人，他砍傷我家的馬，害我只好把原來值 20 貫的馬，用十貫賣了。<br>
+          <strong>小周：</strong>大人，是他的惡犬先咬死我家的羊。雖然羊還是能賣原本值的十貫錢，但我嚥不下這口氣。
+        </div>
+        <strong>【古代法律罰則】</strong><br>
+        一、殺他人馬牛者，笞七十，徒一年半。傷而不堪乘用，笞五十，賠減價。價不減者，笞三十。<br>
+        二、殺傷他人豬羊等畜者，賠減價。價不減者，笞三十。<br>
+        三、任犬殺傷他人畜產者，賠減價。價不減者，笞二十。<br><br>
+        <strong>【注釋】</strong><br>
+        1. 減價，謂畜產值十貫，殺訖唯值兩貫，即減價八貫。<br>
+        2. 價不減者，謂雖有殺傷，仍值原價，笞三十，無所賠償。
+      </div>`
+    },
+   'p24-27': {
+      title: '📖 閱讀五：第 24–27 題 (古代詐騙集團案)',
+      content: `
+      <div style="background-color: #fffbf0; padding: 18px; border-left: 5px solid #c8931a; margin-bottom: 15px; line-height: 1.8; color: #333; font-size: 0.95em;">
+        <strong>【112統測 考題原文】</strong><br>
+        嘉靖間，一士人候選京邸。有官矣，然久客橐空，欲貸千金，與所故遊客談。數日報命，曰：「某中貴允爾五百。」士人猶恨少，客曰：「凡貸者例以厚贄先。內相性喜諛，苟得其歡，即請益非難也。」士人拮据，湊貸器幣，約值百金，為期入謁及門。堂軒巨麗，蒼頭、廬兒皆曳綺縞，兩壁米袋充棟，皆有「御用」字。久之，主人出，壯橫肥，以兩童子頭抵背而行，享禮微笑，許貸八百。廬兒曰：「已晚，須明日。」主人可之。士人既出，喜不自勝，客復屬耳：「當早至，我俟於此。」及明往，寥然空宅，堂下煤土兩堆，皆袋所傾。問主宅者，曰：「昨有內相賃宅半日，知是誰何？」客亦滅跡，方悟其詐。（馮夢龍《智囊》）
+        
+        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed #d4c4a8;">
+          <strong style="color: #c8931a;">【白話文逐字翻譯】</strong><br>
+          <ul style="margin-left: 20px; margin-top: 10px; list-style-type: square; color: #555;">
+            <li style="margin-bottom: 6px;"><strong>嘉靖間，一士人候選京邸：</strong>明朝嘉靖年間，有一位讀書人在京城的客棧等待朝廷分發官職。</li>
+            <li style="margin-bottom: 6px;"><strong>有官矣，然久客橐空，欲貸千金，與所故遊客談：</strong>雖然已經確定有官可做了，但客居京城太久，口袋空空，想借一千兩銀子，便和以前認識的食客（騙子）商量。</li>
+            <li style="margin-bottom: 6px;"><strong>數日報命，曰：「某中貴允爾五百。」：</strong>幾天後，食客回報道：「某位有權勢的太監答應借你五百兩。」</li>
+            <li style="margin-bottom: 6px;"><strong>士人猶恨少，客曰：「凡貸者例以厚贄先。內相性喜諛，苟得其歡，即請益非難也。」：</strong>士人還嫌太少，食客說：「凡是借錢，按慣例要先送上豐厚的見面禮。太監喜歡別人奉承，如果能博得他開心，要增加借款數額並不是難事。」</li>
+            <li style="margin-bottom: 6px;"><strong>士人拮据，湊貸器幣，約值百金，為期入謁及門：</strong>士人手頭緊，東拼西湊借來了價值約一百兩的古玩器具當見面禮，約定日期上門拜訪。</li>
+            <li style="margin-bottom: 6px;"><strong>堂軒巨麗，蒼頭、廬兒皆曳綺縞，兩壁米袋充棟，皆有「御用」字：</strong>到了門口，只見廳堂高大華麗，老僕和小廝都穿著高級絲綢，兩邊牆壁堆滿了米袋，一直堆到屋頂，上面都寫著「御用」兩個字（假裝很有財力）。</li>
+            <li style="margin-bottom: 6px;"><strong>久之，主人出，壯橫肥，以兩童子頭抵背而行，享禮微笑，許貸八百：</strong>等了很久，主人終於出來了，身材高大肥胖，由兩個小童用頭頂著他的背在後面推著走。他收下禮物微微一笑，答應借給士人八百兩。</li>
+            <li style="margin-bottom: 6px;"><strong>廬兒曰：「已晚，須明日。」主人可之。士人既出，喜不自勝，客復屬耳：「當早至，我俟於此。」：</strong>僕役說：「今天太晚了，必須等明天（才能拿錢）。」主人點頭答應。士人出來後開心得不得了，食客又附在他耳邊叮囑：「明天要早點來，我在這裡等你。」</li>
+            <li style="margin-bottom: 6px;"><strong>及明往，寥然空宅，堂下煤土兩堆，皆袋所傾：</strong>到了第二天前往，卻發現是一棟空蕩蕩的宅子，大堂下只剩兩堆煤渣泥土，都是從昨天那些「御用米袋」裡倒出來充數的。</li>
+            <li style="margin-bottom: 6px;"><strong>問主宅者，曰：「昨有內相賃宅半日，知是誰何？」客亦滅跡，方悟其詐：</strong>詢問這間宅子的真正屋主，屋主說：「昨天有太監租了這宅子半天，我哪知道他們是誰？」那個食客也銷聲匿跡了，士人這才恍然大悟自己被騙了。</li>
+          </ul>
+        </div>
+      </div>`
+    },
+    'p28-30': {
+      title: '📖 閱讀六：沈括論銅鏡 (第 28–30 題)',
+      content: `
+      <div style="background-color: #f4f6f8; padding: 18px; border-left: 5px solid #27614a; margin-bottom: 15px; color: #333;">
+        <strong>【閱讀材料：沈括論銅鏡】</strong><br>
+        <div style="text-align: center; margin: 15px 0;">
+            <img src="28-30A.jpg" style="max-width: 100%; height: auto; border: 1px solid #ccc; margin-bottom: 8px; border-radius: 6px;" alt="閱讀原文A"><br>
+            <img src="28-30B.jpg" style="max-width: 100%; height: auto; border: 1px solid #ccc; margin-bottom: 8px; border-radius: 6px;" alt="閱讀原文B"><br>
+            <img src="28-30C.jpg" style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 6px;" alt="閱讀原文C">
+        </div>
+      </div>`
+    },
+    'p31-33': {
+      title: '📖 閱讀七：第 31–33 題 (宋代陶枕)',
+      content: `
+      <div style="background-color: #fdf8f0; padding: 18px; border-left: 5px solid #7a6a55; margin-bottom: 15px; line-height: 1.8; color: #333; font-size: 0.95em;">
+        <strong>【閱讀材料】漢寶德〈一只宋枕中所見的文化精神〉</strong><br>
+        　　在我案頭的這隻陶枕，屬於簡單的腰子形，雖然沒什麼市場價值，卻是我認為最能代表宋代藝術精神的作品。<br><br>
+        　　這隻陶枕產生於北宋末期，除了上半段有簡單的「折枝牡丹」與「珍珠地」畫花裝飾外，是相當素淨的。畫花的線條流暢，予人輕快、簡潔的美感。由於當時磁州瓷枕尚流行複雜的遍體裝，這隻枕頭的創作者在造形上下了很大的功夫，使它成為一個精緻而高雅的雕刻品，幾乎脫離了裝飾工藝的範疇。<br><br>
+        　　它最重要的特色就是造形簡單、直率，完全合乎做為一隻枕頭的功能，其前傾的斜度、內彎的曲度、兩邊起翹的高度，形成一個既合用又美觀的、立體的曲面，非常合乎現代工藝設計「人體工學」的原理。為了試驗它的合用性，我曾枕著它睡了一會兒午覺，我的感覺是：造形太適切了，它對頭部轉動形成限制，側臥就不方便──這也說明古人的睡眠習慣。<br><br>
+        　　它的另一特色就是支撐部分的塑造。這隻陶枕既然不靠裝飾花樣，就只有在塑體上下功夫。照說這種簡單的器具，只要把承托頭部的上皮就好，下面不必費腦筋。但它並沒有照當時一般的做法，僅用平直的面來支撐了事，卻在輪廓線上細細考究，使它除了底面不得不做平之外，竟沒有一根直線，沒有一個平面，而能配合承托面的曲度，造出一個柔和、動人的形來。<br><br>
+        　　製作這隻枕頭的人也許不懂得造形理論，但他似乎能直感的掌握造形的道理，即使是一位現代受過設計教育的設計家也不見得能達到這種境界。
+      </div>`
+    },
+   'p34-36': {
+      title: '📖 閱讀八：第 34–36 題 (臺灣鞋業王國傳奇)',
+      content: `
+      <div style="background-color: #f8f9fa; padding: 18px; border-left: 5px solid #4a90e2; margin-bottom: 15px; line-height: 1.8; color: #333; font-size: 0.95em;">
+        <strong>【閱讀材料】臺灣鞋業王國傳奇</strong><br>
+        　　2018年11月18日，由東海大學東海路2號舊教職員宿舍翻修而成的「Jimmy House」舉行揭牌儀式，紀念九興控股創辦人陳建民（英文名Jimmy）逝世十週年。<br><br>
+        　　出席揭牌儀式的有九興控股董事長蔣至剛、通佳鞋業董事長蔡朝嘉、隆典實業董事長黃振元、聯運鞋業總經理張澄照、寶成集團鞋合資事業群總經理龔松煙、鞋盒大王聯聚建設董事長江韋侖等近百人。他們掌握了全球一半LVMH（路易威登）鞋子、全球第一與第三大運動鞋代工、全球第一大特殊鞋（如戶外打獵鞋）、全球第一大精品鞋盒。有的則自創品牌，如Stella Luna或ASH，打入世界精品鞋市場。這群人如果突然不做鞋子，全球會有1億人買不到中高檔鞋。<br><br>
+        　　當天有些人遠從越南、孟加拉、印度趕回來參加活動。臺灣從三十多年前布滿鞋廠，到九○年代出走海外，這群人依然維繫了深厚感情與供應鏈關係──即便鞋王間不免競爭，例如陳建民與蔡朝嘉客戶重疊，仍是惺惺相惜的朋友。<br><br>
+        　　這些年，臺灣鞋業面臨新的挑戰，許多工廠因人工不再便宜而自中國移出。但臺商到了世界各地，不僅很快蓋起工廠，還能接起供應鏈，例如九興加碼北越，聯聚也緊跟在後，鞋廠與供應商合作如昔。<br><br>
+        　　龔松煙說：「我們想透過Jimmy House告訴大家，當年什麼資源都沒有，也能有今天的成就。如今臺灣依然掌握全球最重要的製鞋供應鏈，即使工廠分布世界各地，研發中心仍會設在臺灣。年輕人如果願意多了解並加入鞋業，絕對大有可為。」<br><br>
+        　　當天不克參加的工作鞋大王何樹滋，已在2015年與蔡朝嘉、江韋侖等人創辦臺灣鞋業教育基金會。雖然製鞋工廠愈走愈遠，鞋王們卻愈來愈團結，為培育臺灣下一代人才而努力。（改寫自呂國禎〈全球逾半LVMH高檔鞋，臺灣人做的！鞋王們齊聚告訴你鞋業王國傳奇〉）
+      </div>`
+    },
+   'p37-38': {
+      title: '📖 閱讀九：第 37–38 題 (焦桐〈論吃飯〉)',
+      content: `
+      <div style="background-color: #fff9f2; padding: 18px; border-left: 5px solid #d35400; margin-bottom: 15px; line-height: 1.8; color: #333; font-size: 0.95em;">
+        <strong>【閱讀材料】焦桐〈論吃飯〉</strong><br><br>
+        　　米飯總帶著樸素的美感，自足而清純。袁枚說：「飯之甘，在百味之上，知味者，遇好飯不必用菜。」飯如果優秀，不必佐任何菜肴，即滋味無窮。<br><br>
+        　　米的天性既純真又深情，跟什麼水結合，加熱，就變成什麼飯。若用雞汁煮飯，即煮出雞飯；加入薑汁，則煮出薑飯；加入檸檬汁，就是檸檬飯；加入椰漿，自然呈現椰漿飯；加入墨魚汁，將變出烏亮的墨魚飯。<br><br>
+        　　不過也並非每種米皆如此。如長米有點像騎牆派，蒸煮後不具黏性，顆粒各自獨立，善變，不強調自我，適合用來製作各式菜飯或炒飯。香米則個性拘泥，堅持主體性，烹煮時會散發芳香，不宜添加咖哩、椰汁、番茄等外物。<br><br>
+        　　吃飯很像家居生活，平常地位低落，往往忽略其存在，名稱明明叫「主食」，卻成附屬品，講究的飯館往往專吃各式菜肴，不配一口飯。白飯之於佳肴，好比畫布之於色彩和線條，一席筵宴總不乏華麗的菜肴，互相爭奇鬥豔，但若缺少白飯的搭配調和，不免彼此扞格。
+      </div>`
+    }
+  };
+
+  // ==========================================
+  // 以下是所有系統功能的邏輯 (都不用動！)
+  // ==========================================
+
+  // 切換頁籤
+  function showTab(tabId) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    
+    const btns = document.querySelectorAll('.tab-btn');
+    if(tabId === 'scores') btns[0].classList.add('active');
+    if(tabId === 'review') btns[1].classList.add('active');
+    if(tabId === 'groups') btns[2].classList.add('active');
+  }
+
+  // 計算成績與落點
+  function calcScore() {
+    const correct = parseInt(document.getElementById('correct-count').value) || 0;
+    const essay = parseInt(document.getElementById('essay-score').value) || 0;
+    const total = (Math.min(correct, 38) * 2) + Math.min(essay, 24);
+    
+    document.getElementById('result-score').innerText = total + " 分";
+    document.getElementById('result-fill').style.width = total + "%";
+    
+    let label = "";
+    if (total >= 78) label = "🎯 頂標水準（前 12%）";
+    else if (total >= 66) label = "🟢 前標水準（前 25%）";
+    else if (total >= 52) label = "🟡 均標水準（50%）";
+    else if (total >= 40) label = "🟠 後標水準（後 25%）";
+    else if (total >= 30) label = "🔴 底標水準（後 12%）";
+    else label = "💡 需要再加油喔！";
+    document.getElementById('result-label').innerText = label;
+  }
+
+  // 渲染題目列表
+  function renderQuestions(diff) {
+    const list = document.getElementById('q-list');
+    list.innerHTML = ''; 
+    const filtered = diff === 'all' ? qData : qData.filter(q => q.diff === diff);
+    
+    filtered.forEach(q => {
+      const card = document.createElement('div');
+      card.className = 'q-card';
+      card.id = 'q-' + q.n;
+      let diffLabel = q.diff === 'easy' ? '★ 基礎' : q.diff === 'medium' ? '★★ 中等' : '★★★ 難';
+      
+      card.innerHTML = `
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">${q.n}</div>
+          <div class="q-preview">${q.preview}</div>
+          <div class="q-meta">
+            <span class="difficulty diff-${q.diff}">${diffLabel}</span>
+            <div class="q-answer">${q.ans}</div>
+            <svg class="q-toggle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-explain">
+            <div class="explain-title">📝 解析</div>
+            <div class="explain-text">${q.explain}</div>
+          </div>
+          <div class="key-point">💡 <strong>複習重點</strong>：${q.keypoint}</div>
+        </div>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  // 展開卡片
+  function toggleQ(el) { el.closest('.q-card').classList.toggle('open'); }
+
+  // 篩選題目
+  function filterQ(diff, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderQuestions(diff);
+  }
+
+  // 跳轉題組
+  function goToQ(num) {
+    showTab('review');
+    filterQ('all', document.querySelector('.filter-btn'));
+    setTimeout(() => {
+      const el = document.getElementById('q-' + num);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.classList.add('open');
+      }
+    }, 150);
+  }
+
+  // 投屏模式切換
+  function toggleProjMode() { document.body.classList.toggle('proj-mode'); }
+
+// 🌟 終極投屏版：題組文章切換 (含關閉按鈕)
+  function showPassage(groupId) {
+    const container = document.getElementById('fixed-passage-container');
+    const content = document.getElementById('passage-content');
+    
+    if (passagesData[groupId]) {
+      // 1. 顯示文章內容 (✨ 這裡幫你加了上下兩顆超明顯的「關閉」按鈕！)
+      content.innerHTML = `
+        <div style="text-align: right; margin-bottom: 10px;">
+          <button onclick="closePassage()" style="background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold;">❌ 關閉原文，顯示所有題目</button>
+        </div>
+        <div class="passage-title">${passagesData[groupId].title}</div>
+        <div class="an-text">${passagesData[groupId].content}</div>
+        <button onclick="closePassage()" style="margin-top: 20px; width: 100%; background: #e74c3c; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-size: 18px; font-weight: bold;">❌ 講解完畢！關閉原文，繼續下一題</button>
+      `;
+      container.classList.add('open');
+      
+      try { showTab('review'); } catch(e) {} 
+      
+      // 2. 追蹤定位魔法：把你點擊的那題找出來，把文章搬到它頭上！
+      if (window.event && window.event.target) {
+        const clickedBtn = window.event.target;
+        const targetQuestionCard = clickedBtn.closest('.q-card');
+        if (targetQuestionCard) {
+          targetQuestionCard.before(container); 
+        }
+      }
+
+      // 3. 解析題號並隱藏其他無關題目
+      const match = groupId.match(/p(\d+)-(\d+)/);
+      if(match) {
+        const start = parseInt(match[1]);
+        const end = parseInt(match[2]);
+        
+        document.querySelectorAll('.q-card').forEach(card => {
+          const qNum = parseInt(card.id.replace('q-', ''));
+          if (qNum >= start && qNum <= end) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+    }
+  }
+
+  // 網頁載入時初始化
+  window.onload = () => { if (typeof qData !== 'undefined') renderQuestions('all'); };
+
+// 🌟 新增：關閉文章並恢復所有題目的按鈕功能
+  function closePassage() {
+    const container = document.getElementById('fixed-passage-container');
+    container.classList.remove('open'); // 把文章收起來
+    
+    // 把所有被隱藏的題目全部叫回來！
+    document.querySelectorAll('.q-card').forEach(card => {
+      card.style.display = 'block';
+    });
+  }
+</script>
+</body>
+</html>
